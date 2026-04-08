@@ -65,12 +65,19 @@ Sahayak AI offers:
 
 ----
 🏗️ System Architecture
+
 User Input (Location, Soil Type, Water Availability)
+           
             ↓
+
 Climate & Data Analysis Layer
+ 
             ↓
+
 AI Recommendation Engine
+          
             ↓
+            
 Outputs:
  - Crop Recommendations
  - Secondary Income Streams
