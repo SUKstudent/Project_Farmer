@@ -52,10 +52,15 @@ Sahayak AI offers:
 🧠 Key Features:
 
 📍 Location-based insights
+
 🌦️ Climate-aware recommendations
+
 💧 Water-efficient farming strategies
+
 📈 Income diversification guidance
+
 📚 Skill development suggestions
+
 🗣️ Simple and accessible interface (future: regional language support)
 
 ----
