@@ -9,11 +9,17 @@ By combining climate insights, agricultural knowledge, and alternative livelihoo
 🚨 Problem Statement
 
 Farmers in dry regions face:
+
 🌧️ Unpredictable rainfall and frequent droughts
+
 🌾 Dependence on single-crop, rain-fed agriculture
+
 💧 Limited irrigation facilities
+
 📉 Income instability and high climate risk
+
 📦 Poor market access
+
 🧠 Lack of awareness about alternative livelihoods and modern practices
 
 ----
@@ -64,25 +70,32 @@ Outputs:
 3) Database: MongoDB / PostgreSQL
 4) APIs: Weather API, Soil Data API
 5) AI/ML: Crop recommendation models, risk analysis
-6) 
+ 
 ----
 📊 Use Cases:
 
 👨‍🌾 Small and marginal farmers
+
 🧑‍🏫 Agricultural extension workers
+
 🌍 NGOs and rural development organizations
+
 🏛️ Government agencies
 
 ----
 🌍 Impact:
 
 📉 Reduced financial vulnerability
+
 📈 Improved income stability
+
 🌱 Sustainable agricultural adoption
+
 🤝 Empowered rural communities
 
 ----
 🚀 Future Enhancements
+
 📡 Real-time weather integration
 📱 Mobile app with regional language support (Kannada, Hindi, etc.)
 🤖 AI chatbot for farmer assistance
