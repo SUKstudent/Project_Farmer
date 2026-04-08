@@ -1,62 +1,57 @@
-import streamlit as st
-import requests
+from fastapi import FastAPI
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+from gtts import gTTS
+import io
 import base64
+import uvicorn
 
-st.set_page_config(page_title="🌾 Sahayak AI", layout="wide")
+app = FastAPI(title="Sahayak AI Backend")
 
-# ---------------- SESSION ----------------
-if "language" not in st.session_state:
-    st.session_state.language = "en"
-if "choice" not in st.session_state:
-    st.session_state.choice = ""
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# ---------------- BACKEND ----------------
-backend_url = "http://localhost:8000/recommend"
+class RequestData(BaseModel):
+    choice: str
+    language: str
 
-# ---------------- UI ----------------
-st.title("🌾 Sahayak AI")
-st.subheader("Krishi Mitra – Assistant")
+def get_plan(choice, lang):
+    plans = {
+        "kn": {
+            "dry": ("ರಾಗಿ, ಜೋಳ, ಜೋವಾರ", "ಆಡು, ಕೋಳಿ", "ತುಪ್ಪ, ಎಣ್ಣೆ"),
+            "dairy": ("ಚಾರೆ ಬೆಳೆಗಳು", "ಹಾಲು, ಪನ್ನೀರ್", "ತುಪ್ಪ, ಬೆಣ್ಣೆ"),
+            "fish": ("ನೀರಿನ ಸಸ್ಯಗಳು", "ಮೀನುಗಾರಿಕೆ", "ಮೀನು ಉತ್ಪನ್ನಗಳು")
+        },
+        "hi": {
+            "dry": ("रागी, ज्वार, बाजरा", "बकरी, मुर्गी", "घी, तेल"),
+            "dairy": ("चारे की फसलें", "दूध, पनीर", "घी, मक्खन"),
+            "fish": ("जल पौधे", "मछली पालन", "मछली उत्पाद")
+        },
+        "en": {
+            "dry": ("Ragi, Jowar, Bajra", "Goat, Poultry", "Ghee, Oil"),
+            "dairy": ("Fodder Crops", "Milk, Paneer", "Ghee, Butter"),
+            "fish": ("Water Plants", "Fish Farming", "Fish Products")
+        }
+    }
+    return plans.get(lang, plans["en"]).get(choice, ("", "", ""))
 
-st.markdown("### Select Farm Type")
+def speak(text, lang):
+    tts = gTTS(text=text, lang=lang)
+    audio_bytes = io.BytesIO()
+    tts.write_to_fp(audio_bytes)
+    audio_bytes.seek(0)
+    return base64.b64encode(audio_bytes.read()).decode()
 
-col1, col2, col3 = st.columns(3)
+@app.post("/recommend")
+def recommend(data: RequestData):
+    crops, income, value = get_plan(data.choice, data.language)
+    audio = speak(f"{crops}. {income}. {value}", data.language)
+    return {"crops": crops, "income": income, "value_addition": value, "audio": audio}
 
-with col1:
-    if st.button("🏜️ Dry Land"):
-        st.session_state.choice = "dry"
-
-with col2:
-    if st.button("🐄 Dairy"):
-        st.session_state.choice = "dairy"
-
-with col3:
-    if st.button("🐟 Fish"):
-        st.session_state.choice = "fish"
-
-# ---------------- CALL API ----------------
-if st.session_state.choice:
-    try:
-        response = requests.post(
-            backend_url,
-            json={
-                "choice": st.session_state.choice,
-                "language": st.session_state.language
-            },
-            timeout=10
-        )
-
-        response.raise_for_status()
-        data = response.json()
-
-        st.success("✅ Recommendation Ready")
-
-        st.write("### 🌱 Crops:", data["crops"])
-        st.write("### 💰 Income:", data["income"])
-        st.write("### 🔄 Value Addition:", data["value_addition"])
-
-        # 🔊 Play audio
-        audio_bytes = base64.b64decode(data["audio"])
-        st.audio(audio_bytes, format="audio/mp3")
-
-    except Exception as e:
-        st.error("⚠️ Failed to connect to backend")
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
