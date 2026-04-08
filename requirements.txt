@@ -3,4 +3,6 @@ uvicorn[standard]
 pydantic
 requests
 streamlit
+pydantic
 gtts
+speechrecognition
