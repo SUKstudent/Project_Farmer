@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahayak AI - Dashboard</title>
+    <title>Sahayak AI - Farmer's Assistant</title>
     <style>
         * {
             margin: 0;
@@ -17,12 +17,267 @@
             min-height: 100vh;
         }
 
+        /* Welcome Page Styles */
+        .welcome-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f3b2c 0%, #1a5c3e 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34,197,94,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .welcome-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .welcome-logo span {
+            font-size: 28px;
+        }
+
+        .welcome-nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .welcome-nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .welcome-nav-links a:hover {
+            color: #166534;
+        }
+
+        .get-started-btn {
+            background: linear-gradient(135deg, #15803d, #166534);
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+        }
+
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 100px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 .highlight {
+            color: #bbf7d0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .btn-primary-welcome {
+            background: white;
+            color: #166534;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-welcome:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-outline-welcome {
+            border: 2px solid white;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-outline-welcome:hover {
+            background: white;
+            color: #166534;
+            transform: translateY(-3px);
+        }
+
+        .features {
+            background: white;
+            padding: 80px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #166534;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: #f9fafb;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #166534;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .stat-label {
+            color: #374151;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background: #0f3b2c;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dashboard Styles */
         .dashboard {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, #0f3b2c 0%, #1a5c3e 100%);
@@ -41,7 +296,7 @@
             text-align: center;
         }
 
-        .logo {
+        .dashboard-logo {
             font-size: 24px;
             font-weight: bold;
             display: flex;
@@ -50,7 +305,7 @@
             gap: 10px;
         }
 
-        .logo span:first-child {
+        .dashboard-logo span:first-child {
             font-size: 32px;
         }
 
@@ -123,7 +378,6 @@
             cursor: pointer;
         }
 
-        /* Main Content */
         .main-content {
             flex: 1;
             margin-left: 280px;
@@ -368,7 +622,6 @@
             color: #166534;
         }
 
-        /* Soil Upload */
         .upload-area {
             border: 2px dashed #cbd5e1;
             border-radius: 16px;
@@ -389,7 +642,6 @@
             border-radius: 12px;
         }
 
-        /* Cards Container */
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -485,7 +737,7 @@
             .sidebar {
                 width: 80px;
             }
-            .sidebar .logo span:last-child,
+            .sidebar .dashboard-logo span:last-child,
             .sidebar .nav-item span:last-child,
             .sidebar-footer .home-btn span:last-child {
                 display: none;
@@ -496,234 +748,348 @@
             .content-area {
                 padding: 16px;
             }
+            .welcome-navbar {
+                padding: 12px 20px;
+            }
+            .welcome-nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .features {
+                padding: 50px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <span>🌾</span>
-                    <span>Sahayak AI</span>
+    <!-- Welcome Page -->
+    <div id="welcomePage" class="welcome-page">
+        <div class="bg-animation"></div>
+
+        <nav class="welcome-navbar">
+            <div class="welcome-logo">
+                <span>🌾</span> <span id="welcomeLogoText">Sahayak AI</span>
+            </div>
+            <div class="welcome-nav-links">
+                <a id="navHome" onclick="scrollToSection('home')">Home</a>
+                <a id="navFeatures" onclick="scrollToSection('features')">Features</a>
+                <a id="navImpact" onclick="scrollToSection('impact')">Impact</a>
+                <a id="navGetStarted" class="get-started-btn" onclick="showDashboard()">Get Started</a>
+            </div>
+        </nav>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>
+                    <span id="heroTitle1">Empowering</span> <span class="highlight" id="heroTitle2">Farmers</span><br>
+                    <span id="heroTitle3">with AI for a</span> <span class="highlight" id="heroTitle4">Resilient Future</span>
+                </h1>
+                <p id="heroDesc">
+                    Sahayak AI helps North Karnataka farmers diversify income,<br>
+                    adapt to climate change, and achieve 95% income stability.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn-primary-welcome" id="startJourneyBtn" onclick="showDashboard()">🌾 Start Your Journey</button>
+                    <button class="btn-outline-welcome" id="learnMoreBtn" onclick="scrollToSection('features')">Learn More</button>
                 </div>
             </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-item active" data-page="dashboard">
-                    <span class="nav-icon">📊</span>
-                    <span id="navDashboard">Dashboard</span>
-                </div>
-                <div class="nav-item" data-page="farmer">
-                    <span class="nav-icon">👨‍🌾</span>
-                    <span id="navFarmer">Farmer Details</span>
-                </div>
-                <div class="nav-item" data-page="soil">
-                    <span class="nav-icon">📸</span>
-                    <span id="navSoil">Soil Analysis</span>
-                </div>
-                <div class="nav-item" data-page="skills">
-                    <span class="nav-icon">👩‍🎨</span>
-                    <span id="navSkills">Family Skills</span>
-                </div>
-                <div class="nav-item" data-page="schemes">
-                    <span class="nav-icon">🏦</span>
-                    <span id="navSchemes">Govt Schemes</span>
-                </div>
-                <div class="nav-item" data-page="reports">
-                    <span class="nav-icon">📄</span>
-                    <span id="navReports">My Reports</span>
-                </div>
-            </nav>
+        </section>
 
-            <div class="sidebar-footer">
-                <div class="language-selector">
-                    <button class="lang-option active" data-lang="english" id="engLangOption">English</button>
-                    <button class="lang-option" data-lang="kannada" id="kanLangOption">ಕನ್ನಡ</button>
+        <section class="features" id="features">
+            <h2 id="featuresTitle">What Sahayak AI Offers</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 id="feature1Title">Personalized Plans</h3>
+                    <p id="feature1Desc">Get customized crop, livestock, and skill recommendations based on your land, water, and budget.</p>
                 </div>
-                <div class="home-btn" onclick="window.location.href='/'">
-                    <span>🏠</span>
-                    <span id="homeText">Home</span>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3 id="feature2Title">Location Intelligence</h3>
+                    <p id="feature2Desc">Auto-detect your district using GPS or select from dropdown. Get region-specific crop recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3 id="feature3Title">Soil Analysis</h3>
+                    <p id="feature3Desc">Take a photo of your soil. AI predicts soil type and recommends suitable crops.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👩‍🎨</div>
+                    <h3 id="feature4Title">Family Skills</h3>
+                    <p id="feature4Desc">Monetize traditional skills like Lambani embroidery, Ilkal saree, Bidri work, and pickles.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏦</div>
+                    <h3 id="feature5Title">Government Schemes</h3>
+                    <p id="feature5Desc">Direct links to PMEGP (35% subsidy), NABARD loans, KVIC craft subsidies, and KUSUM solar scheme.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 id="feature6Title">Multilingual</h3>
+                    <p id="feature6Desc">Available in English and Kannada. No login required!</p>
                 </div>
             </div>
-        </aside>
+        </section>
 
-        <main class="main-content">
-            <header class="top-bar">
-                <div class="page-title" id="pageTitle">Dashboard</div>
-                <div class="farmer-badge" id="farmerBadge">👨‍🌾 Farmer</div>
-            </header>
-
-            <div class="content-area">
-                <!-- Dashboard Page -->
-                <div id="dashboardPage" class="page active">
-                    <div class="stats-cards">
-                        <div class="stat-card">
-                            <div class="stat-value">40% → 95%</div>
-                            <div class="stat-label" id="statStability">Income Stability</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">1-2 → 4-6</div>
-                            <div class="stat-label" id="statSources">Income Sources</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="dashboardIncome">₹0</div>
-                            <div class="stat-label" id="statMonthly">Monthly Income</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">-55%</div>
-                            <div class="stat-label" id="statWater">Water Dependency</div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2 id="welcomeTitle">Welcome to Sahayak AI</h2>
-                        <p id="welcomeDesc">Your personal AI assistant for climate-resilient farming. No login needed!</p>
-                        <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
-                            <button class="btn-primary" style="width: auto; padding: 10px 20px;" id="fillDetailsBtn">📝 Fill Details</button>
-                            <button class="btn-primary" style="width: auto; padding: 10px 20px; background: #3b82f6;" id="soilAnalysisQuickBtn">📸 Soil Analysis</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2 id="recentTitle">Recent Recommendations</h2>
-                        <div id="recentRecommendations">
-                            <p style="text-align: center; padding: 20px; color: #6b7280;" id="noReportsMsg">No recommendations yet. Fill your details.</p>
-                        </div>
-                    </div>
+        <section class="stats" id="impact">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number">40% → 95%</div>
+                    <div class="stat-label" id="stat1Label">Income Stability Improvement</div>
                 </div>
-
-                <!-- Farmer Page -->
-                <div id="farmerPage" class="page">
-                    <div class="card">
-                        <h2 id="farmerTitle">Farmer Details</h2>
-                        
-                        <div class="lang-buttons">
-                            <button class="lang-btn active" data-lang="english" id="engLangBtn">🇬🇧 English</button>
-                            <button class="lang-btn" data-lang="kannada" id="kanLangBtn">🇮🇳 ಕನ್ನಡ</button>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="labelLocation">📍 Select District</label>
-                            <select id="district">
-                                <option value="">-- Select District --</option>
-                                <option value="Bagalkot">Bagalkot</option>
-                                <option value="Vijayapura">Vijayapura</option>
-                                <option value="Gadag">Gadag</option>
-                                <option value="Koppal">Koppal</option>
-                                <option value="Belagavi">Belagavi</option>
-                                <option value="Dharwad">Dharwad</option>
-                                <option value="Haveri">Haveri</option>
-                                <option value="Raichur">Raichur</option>
-                                <option value="Yadgir">Yadgir</option>
-                                <option value="Kalaburagi">Kalaburagi</option>
-                                <option value="Uttara Kannada">Uttara Kannada</option>
-                                <option value="Shivamogga">Shivamogga</option>
-                                <option value="Chikkamagaluru">Chikkamagaluru</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="labelOr">OR</label>
-                            <button type="button" class="btn-secondary" id="getLocationBtn">📍 Use My Current Location</button>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="labelLand">🌍 Land Size (acres)</label>
-                            <input type="number" id="land" step="0.5" placeholder="e.g., 2.5">
-                        </div>
-
-                        <div class="form-group">
-                            <label id="labelWater">💧 Water Availability</label>
-                            <select id="water">
-                                <option value="low">Low / ಕಡಿಮೆ</option>
-                                <option value="moderate">Moderate / ಮಧ್ಯಮ</option>
-                                <option value="high">High / ಹೆಚ್ಚು</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="labelBudget">💰 Budget (₹)</label>
-                            <input type="number" id="budget" placeholder="e.g., 25000">
-                        </div>
-
-                        <div class="form-group">
-                            <label id="labelSkills">👨‍👩‍👧‍👦 Family Skills (Select all that apply)</label>
-                            <div class="skills-grid" id="skillsGrid"></div>
-                        </div>
-
-                        <button class="btn-primary" id="getRecommendationsBtn">🔍 Get Recommendations</button>
-                    </div>
+                <div>
+                    <div class="stat-number">1-2 → 4-6</div>
+                    <div class="stat-label" id="stat2Label">Income Sources per Family</div>
                 </div>
-
-                <!-- Soil Page -->
-                <div id="soilPage" class="page">
-                    <div class="card">
-                        <h2 id="soilTitle">Soil Analysis</h2>
-                        
-                        <div class="lang-buttons">
-                            <button class="lang-btn active" data-lang="english" id="soilEngLangBtn">🇬🇧 English</button>
-                            <button class="lang-btn" data-lang="kannada" id="soilKanLangBtn">🇮🇳 ಕನ್ನಡ</button>
-                        </div>
-
-                        <div class="upload-area" id="uploadArea">
-                            <p id="uploadText">📸 Click to upload soil photo</p>
-                            <input type="file" id="soilImage" accept="image/*" style="display: none">
-                            <img id="imagePreview" class="image-preview" style="display: none">
-                        </div>
-
-                        <div class="form-group">
-                            <label id="soilLabelLand">🌍 Land Size (acres)</label>
-                            <input type="number" id="soil-land" step="0.5">
-                        </div>
-
-                        <div class="form-group">
-                            <label id="soilLabelBudget">💰 Budget (₹)</label>
-                            <input type="number" id="soil-budget">
-                        </div>
-
-                        <div class="form-group">
-                            <label id="soilLabelSkills">👨‍👩‍👧‍👦 Family Skills</label>
-                            <div class="skills-grid" id="soilSkillsGrid"></div>
-                        </div>
-
-                        <button class="btn-primary" id="analyzeSoilBtn">📸 Analyze Soil</button>
-                    </div>
+                <div>
+                    <div class="stat-number">₹19,000+</div>
+                    <div class="stat-label" id="stat3Label">Average Monthly Family Income</div>
                 </div>
-
-                <!-- Family Skills Page -->
-                <div id="skillsPage" class="page">
-                    <div class="card">
-                        <h2 id="skillsTitle">Family Skills to Monetize</h2>
-                        <p id="skillsDesc">Traditional skills that can generate income with zero or low water requirement.</p>
-                        <div id="skillsList" class="cards-container"></div>
-                    </div>
-                </div>
-
-                <!-- Schemes Page -->
-                <div id="schemesPage" class="page">
-                    <div class="card">
-                        <h2 id="schemesTitle">Government Schemes</h2>
-                        <div class="lang-buttons">
-                            <button class="lang-btn active" data-lang="english" id="schemesEngLangBtn">🇬🇧 English</button>
-                            <button class="lang-btn" data-lang="kannada" id="schemesKanLangBtn">🇮🇳 ಕನ್ನಡ</button>
-                        </div>
-                        <div id="schemesList" class="cards-container"></div>
-                    </div>
-                </div>
-
-                <!-- Reports Page -->
-                <div id="reportsPage" class="page">
-                    <div class="card">
-                        <h2 id="reportsTitle">My Reports</h2>
-                        <div id="reportsList"></div>
-                        <button class="btn-primary" id="clearReportsBtn" style="background: #ef4444; margin-top: 20px;">🗑️ Clear All Reports</button>
-                    </div>
+                <div>
+                    <div class="stat-number">13+</div>
+                    <div class="stat-label" id="stat4Label">Districts Covered</div>
                 </div>
             </div>
+        </section>
 
-            <div id="results" class="results" style="padding: 0 32px 32px;"></div>
-        </main>
+        <footer class="footer">
+            <p id="footerText1">🌾 Sahayak AI - Climate-Resilient Livelihood Planner</p>
+            <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;" id="footerText2">Empowering North Karnataka Farmers | No Login Required</p>
+        </footer>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardPage" style="display: none;">
+        <div class="dashboard">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="dashboard-logo">
+                        <span>🌾</span>
+                        <span id="dashboardLogoText">Sahayak AI</span>
+                    </div>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <div class="nav-item active" data-page="dashboard">
+                        <span class="nav-icon">📊</span>
+                        <span id="navDashboard">Dashboard</span>
+                    </div>
+                    <div class="nav-item" data-page="farmer">
+                        <span class="nav-icon">👨‍🌾</span>
+                        <span id="navFarmer">Farmer Details</span>
+                    </div>
+                    <div class="nav-item" data-page="soil">
+                        <span class="nav-icon">📸</span>
+                        <span id="navSoil">Soil Analysis</span>
+                    </div>
+                    <div class="nav-item" data-page="skills">
+                        <span class="nav-icon">👩‍🎨</span>
+                        <span id="navSkills">Family Skills</span>
+                    </div>
+                    <div class="nav-item" data-page="schemes">
+                        <span class="nav-icon">🏦</span>
+                        <span id="navSchemes">Govt Schemes</span>
+                    </div>
+                    <div class="nav-item" data-page="reports">
+                        <span class="nav-icon">📄</span>
+                        <span id="navReports">My Reports</span>
+                    </div>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="language-selector">
+                        <button class="lang-option active" data-lang="english" id="engLangOption">English</button>
+                        <button class="lang-option" data-lang="kannada" id="kanLangOption">ಕನ್ನಡ</button>
+                    </div>
+                    <div class="home-btn" onclick="showWelcome()">
+                        <span>🏠</span>
+                        <span id="homeText">Home</span>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="top-bar">
+                    <div class="page-title" id="pageTitle">Dashboard</div>
+                    <div class="farmer-badge" id="farmerBadge">👨‍🌾 Farmer</div>
+                </header>
+
+                <div class="content-area">
+                    <!-- Dashboard Page -->
+                    <div id="dashboardTab" class="page active">
+                        <div class="stats-cards">
+                            <div class="stat-card">
+                                <div class="stat-value">40% → 95%</div>
+                                <div class="stat-label" id="statStability">Income Stability</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">1-2 → 4-6</div>
+                                <div class="stat-label" id="statSources">Income Sources</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="dashboardIncome">₹0</div>
+                                <div class="stat-label" id="statMonthly">Monthly Income</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">-55%</div>
+                                <div class="stat-label" id="statWater">Water Dependency</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2 id="welcomeTitle">Welcome to Sahayak AI</h2>
+                            <p id="welcomeDesc">Your personal AI assistant for climate-resilient farming. No login needed!</p>
+                            <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                                <button class="btn-primary" style="width: auto; padding: 10px 20px;" id="fillDetailsBtn">📝 Fill Details</button>
+                                <button class="btn-primary" style="width: auto; padding: 10px 20px; background: #3b82f6;" id="soilAnalysisQuickBtn">📸 Soil Analysis</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2 id="recentTitle">Recent Recommendations</h2>
+                            <div id="recentRecommendations">
+                                <p style="text-align: center; padding: 20px; color: #6b7280;" id="noReportsMsg">No recommendations yet. Fill your details.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farmer Page -->
+                    <div id="farmerTab" class="page">
+                        <div class="card">
+                            <h2 id="farmerTitle">Farmer Details</h2>
+                            
+                            <div class="lang-buttons">
+                                <button class="lang-btn active" data-lang="english" id="engLangBtn">🇬🇧 English</button>
+                                <button class="lang-btn" data-lang="kannada" id="kanLangBtn">🇮🇳 ಕನ್ನಡ</button>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="labelLocation">📍 Select District</label>
+                                <select id="district">
+                                    <option value="">-- Select District --</option>
+                                    <option value="Bagalkot">Bagalkot</option>
+                                    <option value="Vijayapura">Vijayapura</option>
+                                    <option value="Gadag">Gadag</option>
+                                    <option value="Koppal">Koppal</option>
+                                    <option value="Belagavi">Belagavi</option>
+                                    <option value="Dharwad">Dharwad</option>
+                                    <option value="Haveri">Haveri</option>
+                                    <option value="Raichur">Raichur</option>
+                                    <option value="Yadgir">Yadgir</option>
+                                    <option value="Kalaburagi">Kalaburagi</option>
+                                    <option value="Uttara Kannada">Uttara Kannada</option>
+                                    <option value="Shivamogga">Shivamogga</option>
+                                    <option value="Chikkamagaluru">Chikkamagaluru</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="labelOr">OR</label>
+                                <button type="button" class="btn-secondary" id="getLocationBtn">📍 Use My Current Location</button>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="labelLand">🌍 Land Size (acres)</label>
+                                <input type="number" id="land" step="0.5" placeholder="e.g., 2.5">
+                            </div>
+
+                            <div class="form-group">
+                                <label id="labelWater">💧 Water Availability</label>
+                                <select id="water">
+                                    <option value="low">Low / ಕಡಿಮೆ</option>
+                                    <option value="moderate">Moderate / ಮಧ್ಯಮ</option>
+                                    <option value="high">High / ಹೆಚ್ಚು</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="labelBudget">💰 Budget (₹)</label>
+                                <input type="number" id="budget" placeholder="e.g., 25000">
+                            </div>
+
+                            <div class="form-group">
+                                <label id="labelSkills">👨‍👩‍👧‍👦 Family Skills (Select all that apply)</label>
+                                <div class="skills-grid" id="skillsGrid"></div>
+                            </div>
+
+                            <button class="btn-primary" id="getRecommendationsBtn">🔍 Get Recommendations</button>
+                        </div>
+                    </div>
+
+                    <!-- Soil Page -->
+                    <div id="soilTab" class="page">
+                        <div class="card">
+                            <h2 id="soilTitle">Soil Analysis</h2>
+                            
+                            <div class="lang-buttons">
+                                <button class="lang-btn active" data-lang="english" id="soilEngLangBtn">🇬🇧 English</button>
+                                <button class="lang-btn" data-lang="kannada" id="soilKanLangBtn">🇮🇳 ಕನ್ನಡ</button>
+                            </div>
+
+                            <div class="upload-area" id="uploadArea">
+                                <p id="uploadText">📸 Click to upload soil photo</p>
+                                <input type="file" id="soilImage" accept="image/*" style="display: none">
+                                <img id="imagePreview" class="image-preview" style="display: none">
+                            </div>
+
+                            <div class="form-group">
+                                <label id="soilLabelLand">🌍 Land Size (acres)</label>
+                                <input type="number" id="soil-land" step="0.5">
+                            </div>
+
+                            <div class="form-group">
+                                <label id="soilLabelBudget">💰 Budget (₹)</label>
+                                <input type="number" id="soil-budget">
+                            </div>
+
+                            <div class="form-group">
+                                <label id="soilLabelSkills">👨‍👩‍👧‍👦 Family Skills</label>
+                                <div class="skills-grid" id="soilSkillsGrid"></div>
+                            </div>
+
+                            <button class="btn-primary" id="analyzeSoilBtn">📸 Analyze Soil</button>
+                        </div>
+                    </div>
+
+                    <!-- Family Skills Page -->
+                    <div id="skillsTab" class="page">
+                        <div class="card">
+                            <h2 id="skillsTitle">Family Skills to Monetize</h2>
+                            <p id="skillsDesc">Traditional skills that can generate income with zero or low water requirement.</p>
+                            <div id="skillsList" class="cards-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Schemes Page -->
+                    <div id="schemesTab" class="page">
+                        <div class="card">
+                            <h2 id="schemesTitle">Government Schemes</h2>
+                            <div class="lang-buttons">
+                                <button class="lang-btn active" data-lang="english" id="schemesEngLangBtn">🇬🇧 English</button>
+                                <button class="lang-btn" data-lang="kannada" id="schemesKanLangBtn">🇮🇳 ಕನ್ನಡ</button>
+                            </div>
+                            <div id="schemesList" class="cards-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Reports Page -->
+                    <div id="reportsTab" class="page">
+                        <div class="card">
+                            <h2 id="reportsTitle">My Reports</h2>
+                            <div id="reportsList"></div>
+                            <button class="btn-primary" id="clearReportsBtn" style="background: #ef4444; margin-top: 20px;">🗑️ Clear All Reports</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="results" class="results" style="padding: 0 32px 32px;"></div>
+            </main>
+        </div>
     </div>
 
     <script>
@@ -734,9 +1100,80 @@
         let selectedSkills = [];
         let selectedSoilSkills = [];
 
-        // Translation Dictionary
-        const translations = {
+        // Welcome Page Translations
+        const welcomeTranslations = {
             english: {
+                logoText: "Sahayak AI",
+                navHome: "Home",
+                navFeatures: "Features",
+                navImpact: "Impact",
+                navGetStarted: "Get Started",
+                heroTitle1: "Empowering",
+                heroTitle2: "Farmers",
+                heroTitle3: "with AI for a",
+                heroTitle4: "Resilient Future",
+                heroDesc: "Sahayak AI helps North Karnataka farmers diversify income, adapt to climate change, and achieve 95% income stability.",
+                startJourney: "🌾 Start Your Journey",
+                learnMore: "Learn More",
+                featuresTitle: "What Sahayak AI Offers",
+                feature1Title: "Personalized Plans",
+                feature1Desc: "Get customized crop, livestock, and skill recommendations based on your land, water, and budget.",
+                feature2Title: "Location Intelligence",
+                feature2Desc: "Auto-detect your district using GPS or select from dropdown. Get region-specific crop recommendations.",
+                feature3Title: "Soil Analysis",
+                feature3Desc: "Take a photo of your soil. AI predicts soil type and recommends suitable crops.",
+                feature4Title: "Family Skills",
+                feature4Desc: "Monetize traditional skills like Lambani embroidery, Ilkal saree, Bidri work, and pickles.",
+                feature5Title: "Government Schemes",
+                feature5Desc: "Direct links to PMEGP (35% subsidy), NABARD loans, KVIC craft subsidies, and KUSUM solar scheme.",
+                feature6Title: "Multilingual",
+                feature6Desc: "Available in English and Kannada. No login required!",
+                stat1Label: "Income Stability Improvement",
+                stat2Label: "Income Sources per Family",
+                stat3Label: "Average Monthly Family Income",
+                stat4Label: "Districts Covered",
+                footerText1: "🌾 Sahayak AI - Climate-Resilient Livelihood Planner",
+                footerText2: "Empowering North Karnataka Farmers | No Login Required"
+            },
+            kannada: {
+                logoText: "ಸಹಾಯಕ್ AI",
+                navHome: "ಮುಖಪುಟ",
+                navFeatures: "ವೈಶಿಷ್ಟ್ಯಗಳು",
+                navImpact: "ಪ್ರಭಾವ",
+                navGetStarted: "ಪ್ರಾರಂಭಿಸಿ",
+                heroTitle1: "ಸಬಲೀಕರಣ",
+                heroTitle2: "ರೈತರು",
+                heroTitle3: "AI ನೊಂದಿಗೆ",
+                heroTitle4: "ಸ್ಥಿತಿಸ್ಥಾಪಕ ಭವಿಷ್ಯ",
+                heroDesc: "ಸಹಾಯಕ್ AI ಉತ್ತರ ಕರ್ನಾಟಕದ ರೈತರಿಗೆ ಆದಾಯ ವೈವಿಧ್ಯೀಕರಣ, ಹವಾಮಾನ ಬದಲಾವಣೆಗೆ ಹೊಂದಾಣಿಕೆ ಮತ್ತು 95% ಆದಾಯ ಸ್ಥಿರತೆಯನ್ನು ಸಾಧಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.",
+                startJourney: "🌾 ನಿಮ್ಮ ಪ್ರಯಾಣ ಪ್ರಾರಂಭಿಸಿ",
+                learnMore: "ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ",
+                featuresTitle: "ಸಹಾಯಕ್ AI ನೀಡುವುದು",
+                feature1Title: "ವೈಯಕ್ತಿಕ ಯೋಜನೆಗಳು",
+                feature1Desc: "ನಿಮ್ಮ ಜಮೀನು, ನೀರು ಮತ್ತು ಬಜೆಟ್ ಆಧಾರದಲ್ಲಿ ವೈಯಕ್ತಿಕಗೊಳಿಸಿದ ಬೆಳೆ, ಜಾನುವಾರು ಮತ್ತು ಕೌಶಲ್ಯ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ.",
+                feature2Title: "ಸ್ಥಳ ಬುದ್ಧಿಮತ್ತೆ",
+                feature2Desc: "GPS ಬಳಸಿ ನಿಮ್ಮ ಜಿಲ್ಲೆಯನ್ನು ಪತ್ತೆ ಮಾಡಿ ಅಥವಾ ಡ್ರಾಪ್ಡೌನ್ನಿಂದ ಆಯ್ಕೆಮಾಡಿ. ಪ್ರಾದೇಶಿಕ-ನಿರ್ದಿಷ್ಟ ಬೆಳೆ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ.",
+                feature3Title: "ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ",
+                feature3Desc: "ನಿಮ್ಮ ಮಣ್ಣಿನ ಫೋಟೋ ತೆಗೆಯಿರಿ. AI ಮಣ್ಣಿನ ಪ್ರಕಾರವನ್ನು ಊಹಿಸುತ್ತದೆ ಮತ್ತು ಸೂಕ್ತ ಬೆಳೆಗಳನ್ನು ಶಿಫಾರಸು ಮಾಡುತ್ತದೆ.",
+                feature4Title: "ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು",
+                feature4Desc: "ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ, ಇಳಕಲ್ ಸೀರೆ, ಬಿದ್ರಿ ಕೆಲಸ, ಉಪ್ಪಿನಕಾಯಿ ಮುಂತಾದ ಸಾಂಪ್ರದಾಯಿಕ ಕೌಶಲ್ಯಗಳಿಂದ ಹಣಗಳಿಸಿ.",
+                feature5Title: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು",
+                feature5Desc: "PMEGP (35% ಸಬ್ಸಿಡಿ), NABARD ಸಾಲಗಳು, KVIC ಕುಶಲಕರ್ಮಿ ಸಬ್ಸಿಡಿಗಳು ಮತ್ತು KUSUM ಸೌರ ಯೋಜನೆಗೆ ನೇರ ಲಿಂಕ್ಗಳು.",
+                feature6Title: "ಬಹುಭಾಷಾ",
+                feature6Desc: "ಇಂಗ್ಲಿಷ್ ಮತ್ತು ಕನ್ನಡದಲ್ಲಿ ಲಭ್ಯ. ಯಾವುದೇ ಲಾಗಿನ್ ಅಗತ್ಯವಿಲ್ಲ!",
+                stat1Label: "ಆದಾಯ ಸ್ಥಿರತೆ ಸುಧಾರಣೆ",
+                stat2Label: "ಕುಟುಂಬಕ್ಕೆ ಆದಾಯ ಮೂಲಗಳು",
+                stat3Label: "ಸರಾಸರಿ ಮಾಸಿಕ ಕುಟುಂಬ ಆದಾಯ",
+                stat4Label: "ಜಿಲ್ಲೆಗಳು ವ್ಯಾಪ್ತಿಯಲ್ಲಿವೆ",
+                footerText1: "🌾 ಸಹಾಯಕ್ AI - ಹವಾಮಾನ ನಿರೋಧಕ ಜೀವನೋಪಾಯ ಯೋಜಕ",
+                footerText2: "ಉತ್ತರ ಕರ್ನಾಟಕದ ರೈತರ ಸಬಲೀಕರಣ | ಯಾವುದೇ ಲಾಗಿನ್ ಅಗತ್ಯವಿಲ್ಲ"
+            }
+        };
+
+        // Dashboard Translations
+        const dashboardTranslations = {
+            english: {
+                dashboardLogo: "Sahayak AI",
                 navDashboard: "Dashboard",
                 navFarmer: "Farmer Details",
                 navSoil: "Soil Analysis",
@@ -777,6 +1214,7 @@
                 clearReportsBtn: "🗑️ Clear All Reports"
             },
             kannada: {
+                dashboardLogo: "ಸಹಾಯಕ್ AI",
                 navDashboard: "ಡ್ಯಾಶ್ಬೋರ್ಡ್",
                 navFarmer: "ರೈತರ ಮಾಹಿತಿ",
                 navSoil: "ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ",
@@ -818,32 +1256,69 @@
             }
         };
 
-        // COMPLETE SKILLS LIST
         const SKILLS_LIST = [
-            { id: "lambani", name: "Lambani (Banjara) Embroidery", kn: "ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ", setup: 2000, monthly: 4000, training: "Lambani Craft Center, Hampi", water: "Zero" },
-            { id: "kaudi", name: "Kaudi Patchwork (Traditional Quilt)", kn: "ಕೌಡಿ ಪ್ಯಾಚ್ವರ್ಕ್", setup: 3000, monthly: 5000, training: "SHG Hubli-Dharwad", water: "Zero" },
-            { id: "ilkal", name: "Ilkal Saree Weaving", kn: "ಇಳಕಲ್ ಸೀರೆ ನೇಯ್ಗೆ", setup: 15000, monthly: 10000, training: "Ilkal Handloom Center, Bagalkot", water: "Low" },
-            { id: "rangoli", name: "Rangoli (Festival Art)", kn: "ರಂಗೋಲಿ", setup: 1000, monthly: 3000, training: "Local Artisans", water: "Zero" },
-            { id: "bamboo", name: "Bamboo/Grass Basket Making", kn: "ಬಿದಿರು/ಹುಲ್ಲು ಬುಟ್ಟಿ ತಯಾರಿಕೆ", setup: 2000, monthly: 4000, training: "KVIC Hubli", water: "Zero" },
-            { id: "rope", name: "Jute/Natural Fiber Rope Making", kn: "ಸೆಣಬು/ನಾರಿನ ಹಗ್ಗ ತಯಾರಿಕೆ", setup: 3000, monthly: 5000, training: "KRISHI Jyoti Dharwad", water: "Zero" },
-            { id: "bead", name: "Bead & Tribal Jewelry Making", kn: "ಮಣಿ ಮತ್ತು ಬುಡಕಟ್ಟು ಆಭರಣ", setup: 2500, monthly: 4500, training: "KVIC Bidar", water: "Zero" },
-            { id: "clothbag", name: "Cloth Bag Stitching (Reusable)", kn: "ಬಟ್ಟೆ ಚೀಲ ಹೊಲಿಗೆ", setup: 2000, monthly: 5000, training: "NABARD SHG", water: "Low" },
-            { id: "leafplate", name: "Areca Leaf Plate Making", kn: "ಅಡಿಕೆ ಎಲೆ ತಟ್ಟೆ ತಯಾರಿಕೆ", setup: 5000, monthly: 8000, training: "KVIC", water: "Low" },
-            { id: "papad", name: "Papad Making", kn: "ಪಾಪಡ್ ತಯಾರಿಕೆ", setup: 3000, monthly: 7000, training: "NABARD SHG", water: "Low" },
-            { id: "spice", name: "Spice Powder Making (Byadgi Chilli)", kn: "ಮಸಾಲೆ ಪುಡಿ ತಯಾರಿಕೆ (ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ)", setup: 8000, monthly: 12000, training: "Spice Board, Haveri", water: "Low" },
-            { id: "jowar", name: "Jowar-based Food Products", kn: "ಜೋಳದ ಆಹಾರ ಉತ್ಪನ್ನಗಳು", setup: 10000, monthly: 15000, training: "Food Processing Unit, Dharwad", water: "Moderate" },
-            { id: "groundnut", name: "Groundnut Products (Chikki, Oil)", kn: "ಕಡಲೆಕಾಯಿ ಉತ್ಪನ್ನಗಳು (ಚಿಕ್ಕಿ, ಎಣ್ಣೆ)", setup: 15000, monthly: 12000, training: "NABARD Food Park", water: "Moderate" },
-            { id: "dairy", name: "Dairy Products (Ghee, Curd, Butter)", kn: "ಹೈನು ಉತ್ಪನ್ನಗಳು (ತುಪ್ಪ, ಮೊಸರು, ಬೆಣ್ಣೆ)", setup: 20000, monthly: 15000, training: "KMF Dairy Training Center", water: "Moderate" },
-            { id: "millet", name: "Millet-based Food Processing", kn: "ಸಿರಿಧಾನ್ಯ ಆಹಾರ ಸಂಸ್ಕರಣೆ", setup: 12000, monthly: 13000, training: "Millet Mission, Karnataka", water: "Low" },
-            { id: "bidri", name: "Bidri Work", kn: "ಬಿದ್ರಿ ಕೆಲಸ", setup: 5000, monthly: 5000, training: "KVIC Bidar", water: "Zero" },
-            { id: "kasuti", name: "Kasuti Embroidery", kn: "ಕಸೂತಿ", setup: 1000, monthly: 3000, training: "KRISHI Jyoti Dharwad", water: "Zero" },
-            { id: "diya", name: "Diya Making", kn: "ದೀಪ ಮಾಡುವುದು", setup: 3000, monthly: 8000, training: "KVIC Hubli", water: "Zero" },
-            { id: "pickle", name: "Pickle Making", kn: "ಉಪ್ಪಿನಕಾಯಿ", setup: 5000, monthly: 12000, training: "NABARD SHG", water: "Low" },
-            { id: "agarbatti", name: "Agarbatti Making", kn: "ಅಗರಬತ್ತಿ", setup: 4000, monthly: 7000, training: "KVIC", water: "Zero" }
+            { id: "lambani", name: "Lambani (Banjara) Embroidery", kn: "ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ", setup: 2000, monthly: 4000, training: "Lambani Craft Center, Hampi", training_kn: "ಲಂಬಾಣಿ ಕ್ರಾಫ್ಟ್ ಸೆಂಟರ್, ಹಂಪಿ", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "kaudi", name: "Kaudi Patchwork (Traditional Quilt)", kn: "ಕೌಡಿ ಪ್ಯಾಚ್ವರ್ಕ್", setup: 3000, monthly: 5000, training: "SHG Hubli-Dharwad", training_kn: "ಸ್ವಸಹಾಯ ಗುಂಪು ಹುಬ್ಬಳ್ಳಿ-ಧಾರವಾಡ", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "ilkal", name: "Ilkal Saree Weaving", kn: "ಇಳಕಲ್ ಸೀರೆ ನೇಯ್ಗೆ", setup: 15000, monthly: 10000, training: "Ilkal Handloom Center, Bagalkot", training_kn: "ಇಳಕಲ್ ಹ್ಯಾಂಡ್ಲೂಮ್ ಸೆಂಟರ್, ಬಾಗಲಕೋಟೆ", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "rangoli", name: "Rangoli (Festival Art)", kn: "ರಂಗೋಲಿ", setup: 1000, monthly: 3000, training: "Local Artisans", training_kn: "ಸ್ಥಳೀಯ ಕಲಾವಿದರು", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "bamboo", name: "Bamboo/Grass Basket Making", kn: "ಬಿದಿರು/ಹುಲ್ಲು ಬುಟ್ಟಿ ತಯಾರಿಕೆ", setup: 2000, monthly: 4000, training: "KVIC Hubli", training_kn: "ಕೆವಿಐಸಿ ಹುಬ್ಬಳ್ಳಿ", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "rope", name: "Jute/Natural Fiber Rope Making", kn: "ಸೆಣಬು/ನಾರಿನ ಹಗ್ಗ ತಯಾರಿಕೆ", setup: 3000, monthly: 5000, training: "KRISHI Jyoti Dharwad", training_kn: "ಕೃಷಿ ಜ್ಯೋತಿ ಧಾರವಾಡ", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "bead", name: "Bead & Tribal Jewelry Making", kn: "ಮಣಿ ಮತ್ತು ಬುಡಕಟ್ಟು ಆಭರಣ", setup: 2500, monthly: 4500, training: "KVIC Bidar", training_kn: "ಕೆವಿಐಸಿ ಬೀದರ್", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "clothbag", name: "Cloth Bag Stitching (Reusable)", kn: "ಬಟ್ಟೆ ಚೀಲ ಹೊಲಿಗೆ", setup: 2000, monthly: 5000, training: "NABARD SHG", training_kn: "ನಬಾರ್ಡ್ ಸ್ವಸಹಾಯ ಗುಂಪು", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "leafplate", name: "Areca Leaf Plate Making", kn: "ಅಡಿಕೆ ಎಲೆ ತಟ್ಟೆ ತಯಾರಿಕೆ", setup: 5000, monthly: 8000, training: "KVIC", training_kn: "ಕೆವಿಐಸಿ", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "papad", name: "Papad Making", kn: "ಪಾಪಡ್ ತಯಾರಿಕೆ", setup: 3000, monthly: 7000, training: "NABARD SHG", training_kn: "ನಬಾರ್ಡ್ ಸ್ವಸಹಾಯ ಗುಂಪು", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "spice", name: "Spice Powder Making (Byadgi Chilli)", kn: "ಮಸಾಲೆ ಪುಡಿ ತಯಾರಿಕೆ (ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ)", setup: 8000, monthly: 12000, training: "Spice Board, Haveri", training_kn: "ಮಸಾಲೆ ಮಂಡಳಿ, ಹಾವೇರಿ", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "jowar", name: "Jowar-based Food Products", kn: "ಜೋಳದ ಆಹಾರ ಉತ್ಪನ್ನಗಳು", setup: 10000, monthly: 15000, training: "Food Processing Unit, Dharwad", training_kn: "ಆಹಾರ ಸಂಸ್ಕರಣಾ ಘಟಕ, ಧಾರವಾಡ", water: "Moderate", water_kn: "ಮಧ್ಯಮ" },
+            { id: "groundnut", name: "Groundnut Products (Chikki, Oil)", kn: "ಕಡಲೆಕಾಯಿ ಉತ್ಪನ್ನಗಳು", setup: 15000, monthly: 12000, training: "NABARD Food Park", training_kn: "ನಬಾರ್ಡ್ ಫುಡ್ ಪಾರ್ಕ್", water: "Moderate", water_kn: "ಮಧ್ಯಮ" },
+            { id: "dairy", name: "Dairy Products (Ghee, Curd, Butter)", kn: "ಹೈನು ಉತ್ಪನ್ನಗಳು", setup: 20000, monthly: 15000, training: "KMF Dairy Training Center", training_kn: "ಕೆಎಂಎಫ್ ಹೈನು ತರಬೇತಿ ಕೇಂದ್ರ", water: "Moderate", water_kn: "ಮಧ್ಯಮ" },
+            { id: "millet", name: "Millet-based Food Processing", kn: "ಸಿರಿಧಾನ್ಯ ಆಹಾರ ಸಂಸ್ಕರಣೆ", setup: 12000, monthly: 13000, training: "Millet Mission, Karnataka", training_kn: "ಸಿರಿಧಾನ್ಯ ಮಿಷನ್, ಕರ್ನಾಟಕ", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "bidri", name: "Bidri Work", kn: "ಬಿದ್ರಿ ಕೆಲಸ", setup: 5000, monthly: 5000, training: "KVIC Bidar", training_kn: "ಕೆವಿಐಸಿ ಬೀದರ್", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "kasuti", name: "Kasuti Embroidery", kn: "ಕಸೂತಿ", setup: 1000, monthly: 3000, training: "KRISHI Jyoti Dharwad", training_kn: "ಕೃಷಿ ಜ್ಯೋತಿ ಧಾರವಾಡ", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "diya", name: "Diya Making", kn: "ದೀಪ ಮಾಡುವುದು", setup: 3000, monthly: 8000, training: "KVIC Hubli", training_kn: "ಕೆವಿಐಸಿ ಹುಬ್ಬಳ್ಳಿ", water: "Zero", water_kn: "ಶೂನ್ಯ" },
+            { id: "pickle", name: "Pickle Making", kn: "ಉಪ್ಪಿನಕಾಯಿ", setup: 5000, monthly: 12000, training: "NABARD SHG", training_kn: "ನಬಾರ್ಡ್ ಸ್ವಸಹಾಯ ಗುಂಪು", water: "Low", water_kn: "ಕಡಿಮೆ" },
+            { id: "agarbatti", name: "Agarbatti Making", kn: "ಅಗರಬತ್ತಿ", setup: 4000, monthly: 7000, training: "KVIC", training_kn: "ಕೆವಿಐಸಿ", water: "Zero", water_kn: "ಶೂನ್ಯ" }
         ];
 
-        function updateUILanguage() {
-            const t = translations[currentLanguage];
+        // Welcome Page Functions
+        function updateWelcomeLanguage() {
+            const t = welcomeTranslations[currentLanguage];
+            document.getElementById('welcomeLogoText').innerText = t.logoText;
+            document.getElementById('navHome').innerText = t.navHome;
+            document.getElementById('navFeatures').innerText = t.navFeatures;
+            document.getElementById('navImpact').innerText = t.navImpact;
+            document.getElementById('navGetStarted').innerText = t.navGetStarted;
+            document.getElementById('heroTitle1').innerText = t.heroTitle1;
+            document.getElementById('heroTitle2').innerText = t.heroTitle2;
+            document.getElementById('heroTitle3').innerText = t.heroTitle3;
+            document.getElementById('heroTitle4').innerText = t.heroTitle4;
+            document.getElementById('heroDesc').innerHTML = t.heroDesc;
+            document.getElementById('startJourneyBtn').innerHTML = t.startJourney;
+            document.getElementById('learnMoreBtn').innerHTML = t.learnMore;
+            document.getElementById('featuresTitle').innerText = t.featuresTitle;
+            document.getElementById('feature1Title').innerText = t.feature1Title;
+            document.getElementById('feature1Desc').innerText = t.feature1Desc;
+            document.getElementById('feature2Title').innerText = t.feature2Title;
+            document.getElementById('feature2Desc').innerText = t.feature2Desc;
+            document.getElementById('feature3Title').innerText = t.feature3Title;
+            document.getElementById('feature3Desc').innerText = t.feature3Desc;
+            document.getElementById('feature4Title').innerText = t.feature4Title;
+            document.getElementById('feature4Desc').innerText = t.feature4Desc;
+            document.getElementById('feature5Title').innerText = t.feature5Title;
+            document.getElementById('feature5Desc').innerText = t.feature5Desc;
+            document.getElementById('feature6Title').innerText = t.feature6Title;
+            document.getElementById('feature6Desc').innerText = t.feature6Desc;
+            document.getElementById('stat1Label').innerText = t.stat1Label;
+            document.getElementById('stat2Label').innerText = t.stat2Label;
+            document.getElementById('stat3Label').innerText = t.stat3Label;
+            document.getElementById('stat4Label').innerText = t.stat4Label;
+            document.getElementById('footerText1').innerHTML = t.footerText1;
+            document.getElementById('footerText2').innerHTML = t.footerText2;
+        }
+
+        // Dashboard Functions
+        function updateDashboardLanguage() {
+            const t = dashboardTranslations[currentLanguage];
+            document.getElementById('dashboardLogoText').innerText = t.dashboardLogo;
             document.getElementById('navDashboard').innerText = t.navDashboard;
             document.getElementById('navFarmer').innerText = t.navFarmer;
             document.getElementById('navSoil').innerText = t.navSoil;
@@ -884,25 +1359,87 @@
             document.getElementById('reportsTitle').innerText = t.reportsTitle;
             const clearBtn = document.getElementById('clearReportsBtn');
             if (clearBtn) clearBtn.innerHTML = t.clearReportsBtn;
+            
+            // Update page title if dashboard is visible
+            if (document.getElementById('dashboardPage').style.display !== 'none') {
+                const activePage = document.querySelector('#dashboardTab.page.active, #farmerTab.page.active, #soilTab.page.active, #skillsTab.page.active, #schemesTab.page.active, #reportsTab.page.active');
+                if (activePage) {
+                    const pageId = activePage.id;
+                    const titles = {
+                        dashboardTab: t.navDashboard,
+                        farmerTab: t.navFarmer,
+                        soilTab: t.navSoil,
+                        skillsTab: t.navSkills,
+                        schemesTab: t.navSchemes,
+                        reportsTab: t.navReports
+                    };
+                    document.getElementById('pageTitle').innerText = titles[pageId] || t.navDashboard;
+                }
+            }
         }
 
-        function switchPage(pageName) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById(`${pageName}Page`).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            document.querySelector(`.nav-item[data-page="${pageName}"]`).classList.add('active');
-            const titles = { 
-                dashboard: currentLanguage === 'kannada' ? 'ಡ್ಯಾಶ್ಬೋರ್ಡ್' : 'Dashboard', 
-                farmer: currentLanguage === 'kannada' ? 'ರೈತರ ಮಾಹಿತಿ' : 'Farmer Details', 
-                soil: currentLanguage === 'kannada' ? 'ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ' : 'Soil Analysis', 
-                skills: currentLanguage === 'kannada' ? 'ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು' : 'Family Skills', 
-                schemes: currentLanguage === 'kannada' ? 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು' : 'Government Schemes', 
-                reports: currentLanguage === 'kannada' ? 'ನನ್ನ ವರದಿಗಳು' : 'My Reports' 
-            };
-            document.getElementById('pageTitle').innerText = titles[pageName];
-            if (pageName === 'schemes') loadSchemes();
-            if (pageName === 'skills') loadSkills();
-            if (pageName === 'reports') loadReports();
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            soilLanguage = lang;
+            schemesLanguage = lang;
+            
+            // Update welcome page language
+            updateWelcomeLanguage();
+            
+            // Update dashboard language if visible
+            if (document.getElementById('dashboardPage').style.display !== 'none') {
+                updateDashboardLanguage();
+            }
+            
+            // Update active states
+            document.getElementById('engLangOption').classList.remove('active');
+            document.getElementById('kanLangOption').classList.remove('active');
+            if (lang === 'english') {
+                document.getElementById('engLangOption').classList.add('active');
+            } else {
+                document.getElementById('kanLangOption').classList.add('active');
+            }
+            
+            // Update farmer page language buttons
+            document.querySelectorAll('#farmerTab .lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            });
+            
+            // Update soil page language buttons
+            document.querySelectorAll('#soilTab .lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            });
+            
+            // Update schemes page language buttons
+            document.querySelectorAll('#schemesTab .lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            });
+            
+            // Re-render skills with new language
+            renderSkills('skillsGrid', selectedSkills, toggleSkill, lang);
+            renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, lang);
+            
+            // Reload data
+            loadSchemes();
+            loadSkills();
+            loadReports();
+        }
+
+        function setSoilLanguage(lang) {
+            soilLanguage = lang;
+            document.querySelectorAll('#soilTab .lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            });
+            renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, lang);
+        }
+
+        function setSchemesLanguage(lang) {
+            schemesLanguage = lang;
+            loadSchemes();
         }
 
         function renderSkills(containerId, selectedArray, onClickFn, lang) {
@@ -933,34 +1470,50 @@
             renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, soilLanguage);
         }
 
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.getElementById('engLangOption').classList.remove('active');
-            document.getElementById('kanLangOption').classList.remove('active');
-            if (lang === 'english') document.getElementById('engLangOption').classList.add('active');
-            else document.getElementById('kanLangOption').classList.add('active');
-            document.querySelectorAll('#farmerPage .lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+        function switchPage(pageName) {
+            document.querySelectorAll('#dashboardTab, #farmerTab, #soilTab, #skillsTab, #schemesTab, #reportsTab').forEach(page => {
+                page.classList.remove('active');
             });
-            updateUILanguage();
-            renderSkills('skillsGrid', selectedSkills, toggleSkill, lang);
+            document.getElementById(`${pageName}Tab`).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${pageName}"]`).classList.add('active');
+            
+            const titles = {
+                dashboard: currentLanguage === 'kannada' ? 'ಡ್ಯಾಶ್ಬೋರ್ಡ್' : 'Dashboard',
+                farmer: currentLanguage === 'kannada' ? 'ರೈತರ ಮಾಹಿತಿ' : 'Farmer Details',
+                soil: currentLanguage === 'kannada' ? 'ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ' : 'Soil Analysis',
+                skills: currentLanguage === 'kannada' ? 'ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು' : 'Family Skills',
+                schemes: currentLanguage === 'kannada' ? 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು' : 'Government Schemes',
+                reports: currentLanguage === 'kannada' ? 'ನನ್ನ ವರದಿಗಳು' : 'My Reports'
+            };
+            document.getElementById('pageTitle').innerText = titles[pageName];
+            
+            if (pageName === 'schemes') loadSchemes();
+            if (pageName === 'skills') loadSkills();
+            if (pageName === 'reports') loadReports();
+        }
+
+        function showDashboard() {
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('dashboardPage').style.display = 'block';
+            updateDashboardLanguage();
+            loadSchemes();
             loadSkills();
-            loadSchemes();
+            loadReports();
         }
 
-        function setSoilLanguage(lang) {
-            soilLanguage = lang;
-            document.querySelectorAll('#soilPage .lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
-            });
-            renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, lang);
+        function showWelcome() {
+            document.getElementById('dashboardPage').style.display = 'none';
+            document.getElementById('welcomePage').style.display = 'block';
+            updateWelcomeLanguage();
         }
 
-        function setSchemesLanguage(lang) {
-            schemesLanguage = lang;
-            loadSchemes();
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Location detection
@@ -1107,16 +1660,16 @@
                 const data = await response.json();
                 let html = '<div class="cards-container">';
                 data.schemes.forEach(scheme => {
+                    const isKn = schemesLanguage === 'kannada';
                     html += `<div class="info-card">
                         <h3>${scheme.display_name}</h3>
                         <div class="subsidy">🎯 ${scheme.subsidy}</div>
-                        <div class="info-detail"><span>💰 Max Loan:</span> ${scheme.loan}</div>
-                        <div class="info-detail"><span>📋 Eligibility:</span> ${scheme.display_eligibility}</div>
-                        <div class="info-detail"><span>📄 Documents:</span> ${scheme.display_documents}</div>
-                        <div class="info-detail"><span>📞 Contact:</span> ${scheme.display_contact}</div>
-                        <div class="info-detail"><span>🏷️ Category:</span> ${scheme.display_category || scheme.category}</div>
-                        <div class="deadline">⏰ Deadline: ${scheme.deadline}</div>
-                        <a href="${scheme.application_link}" target="_blank" class="apply-btn">📝 Apply Now</a>
+                        <div class="info-detail"><span>💰 ${isKn ? 'ಗರಿಷ್ಠ ಸಾಲ' : 'Max Loan'}:</span> ${scheme.loan}</div>
+                        <div class="info-detail"><span>📋 ${isKn ? 'ಅರ್ಹತೆ' : 'Eligibility'}:</span> ${scheme.display_eligibility}</div>
+                        <div class="info-detail"><span>📄 ${isKn ? 'ದಾಖಲೆಗಳು' : 'Documents'}:</span> ${scheme.display_documents}</div>
+                        <div class="info-detail"><span>📞 ${isKn ? 'ಸಂಪರ್ಕ' : 'Contact'}:</span> ${scheme.display_contact}</div>
+                        <div class="deadline">⏰ ${isKn ? 'ಕೊನೆಯ ದಿನಾಂಕ' : 'Deadline'}: ${scheme.deadline}</div>
+                        <a href="${scheme.application_link}" target="_blank" class="apply-btn">📝 ${isKn ? 'ಅರ್ಜಿ ಸಲ್ಲಿಸಿ' : 'Apply Now'}</a>
                     </div>`;
                 });
                 html += '</div>';
@@ -1134,11 +1687,16 @@
                 const data = await response.json();
                 let html = '<div class="cards-container">';
                 data.skills.forEach(skill => {
+                    const isKn = currentLanguage === 'kannada';
                     html += `<div class="info-card">
                         <h3>${skill.display_name}</h3>
-                        <div class="subsidy">💰 Setup: ₹${skill.setup} | Monthly: ₹${skill.monthly}</div>
-                        <div class="info-detail"><span>🎓 Training:</span> ${skill.display_training || skill.training}</div>
-                        <div class="info-detail"><span>💧 Water:</span> ${skill.water} water required</div>
+                        <div class="subsidy">💰 ${isKn ? 'ವೆಚ್ಚ' : 'Setup'}: ₹${skill.setup} | ${isKn ? 'ಮಾಸಿಕ' : 'Monthly'}: ₹${skill.monthly}</div>
+                        <div class="info-detail"><span>🎓 ${isKn ? 'ತರಬೇತಿ' : 'Training'}:</span> ${skill.display_training || skill.training}</div>
+                        <div class="info-detail"><span>💧 ${isKn ? 'ನೀರಿನ ಅಗತ್ಯ' : 'Water'}:</span> ${isKn ? 
+                            (skill.water === 'Zero' ? 'ಶೂನ್ಯ' : 
+                             skill.water === 'Low' ? 'ಕಡಿಮೆ' : 
+                             skill.water === 'Moderate' ? 'ಮಧ್ಯಮ' : 'ಹೆಚ್ಚು') : 
+                            skill.water} ${isKn ? 'ನೀರು ಬೇಕು' : 'water required'}</div>
                     </div>`;
                 });
                 html += '</div>';
@@ -1178,9 +1736,14 @@
             }
         }
 
-        // ========== EVENT LISTENERS ==========
+        // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
-            // Navigation
+            // Welcome page scroll
+            window.scrollToSection = scrollToSection;
+            window.showDashboard = showDashboard;
+            window.showWelcome = showWelcome;
+            
+            // Dashboard navigation
             document.querySelectorAll('.nav-item').forEach(nav => {
                 nav.addEventListener('click', () => switchPage(nav.getAttribute('data-page')));
             });
@@ -1209,9 +1772,9 @@
             // Initial renders
             renderSkills('skillsGrid', selectedSkills, toggleSkill, 'english');
             renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, 'english');
-            loadSchemes();
-            loadSkills();
-            loadReports();
+            
+            // Set initial language
+            setLanguage('english');
         });
     </script>
 </body>
