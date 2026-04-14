@@ -13,7 +13,10 @@ app.use(cors());
 app.use(express.json());
 
 // ========== FIXED PATHS FOR RENDER ==========
-// The frontend files are at the root level, not inside backend folder
+// Serve static files from frontend folder
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+// Also serve from parent directory (for local development)
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Configure multer for file uploads
@@ -281,17 +284,66 @@ app.get('/api/skills', (req, res) => {
 // ========== FIXED ROUTES FOR RENDER ==========
 // Serve welcome.html at root
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'welcome.html'));
+    try {
+        // Try multiple possible paths
+        const possiblePaths = [
+            path.join(__dirname, 'frontend', 'welcome.html'),
+            path.join(__dirname, '../frontend/welcome.html'),
+            path.join(process.cwd(), 'frontend', 'welcome.html')
+        ];
+        
+        for (const filePath of possiblePaths) {
+            const fs = require('fs');
+            if (fs.existsSync(filePath)) {
+                return res.sendFile(filePath);
+            }
+        }
+        res.status(404).send('Welcome page not found');
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
 });
 
 // Serve dashboard
 app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+    try {
+        const possiblePaths = [
+            path.join(__dirname, 'frontend', 'index.html'),
+            path.join(__dirname, '../frontend/index.html'),
+            path.join(process.cwd(), 'frontend', 'index.html')
+        ];
+        
+        for (const filePath of possiblePaths) {
+            const fs = require('fs');
+            if (fs.existsSync(filePath)) {
+                return res.sendFile(filePath);
+            }
+        }
+        res.status(404).send('Dashboard page not found');
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
 });
 
 // Fallback for any other route - serve index.html
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+    try {
+        const possiblePaths = [
+            path.join(__dirname, 'frontend', 'index.html'),
+            path.join(__dirname, '../frontend/index.html'),
+            path.join(process.cwd(), 'frontend', 'index.html')
+        ];
+        
+        for (const filePath of possiblePaths) {
+            const fs = require('fs');
+            if (fs.existsSync(filePath)) {
+                return res.sendFile(filePath);
+            }
+        }
+        res.status(404).send('Page not found');
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
 });
 
 app.listen(PORT, () => {
