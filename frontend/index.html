@@ -2,108 +2,217 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Sahayak AI - Climate Resilient Livelihood Planner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahayak AI - Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>🌾 Sahayak AI</h1>
-        <p>Climate-Resilient Livelihood Planner for North Karnataka Farmers</p>
-    </div>
-
-    <div class="container">
-        <div class="tabs">
-            <button class="tab active" data-tab="form">📝 Farmer Details</button>
-            <button class="tab" data-tab="soil">📸 Soil Analysis</button>
-            <button class="tab" data-tab="schemes">🏦 Government Schemes</button>
-        </div>
-
-        <!-- Form Tab -->
-        <div id="formTab" class="tab-content active">
-            <div class="card">
-                <div class="lang-buttons">
-                    <button class="lang-btn active" data-lang="english">🇬🇧 English</button>
-                    <button class="lang-btn" data-lang="kannada">🇮🇳 ಕನ್ನಡ</button>
+    <div class="dashboard">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span>🌾</span>
+                    <span>Sahayak AI</span>
                 </div>
-
-                <div class="form-group">
-                    <label id="label-land">🌍 Land Size (acres)</label>
-                    <input type="number" id="land" step="0.5" placeholder="e.g., 2.5">
-                </div>
-
-                <div class="form-group">
-                    <label id="label-water">💧 Water Availability</label>
-                    <select id="water">
-                        <option value="low">Low / ಕಡಿಮೆ</option>
-                        <option value="moderate">Moderate / ಮಧ್ಯಮ</option>
-                        <option value="high">High / ಹೆಚ್ಚು</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label id="label-budget">💰 Budget (₹)</label>
-                    <input type="number" id="budget" placeholder="e.g., 25000">
-                </div>
-
-                <div class="form-group">
-                    <label id="label-skills">👨‍👩‍👧‍👦 Family Skills</label>
-                    <div class="skills-grid" id="skillsGrid"></div>
-                </div>
-
-                <button class="btn-primary" id="submitBtn">🔍 Get Recommendations</button>
             </div>
-        </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="farmer">
+                    <span class="nav-icon">👨‍🌾</span>
+                    <span>Farmer Details</span>
+                </a>
+                <a href="#" class="nav-item" data-page="soil">
+                    <span class="nav-icon">📸</span>
+                    <span>Soil Analysis</span>
+                </a>
+                <a href="#" class="nav-item" data-page="schemes">
+                    <span class="nav-icon">🏦</span>
+                    <span>Govt Schemes</span>
+                </a>
+                <a href="#" class="nav-item" data-page="skills">
+                    <span class="nav-icon">👩‍🎨</span>
+                    <span>Family Skills</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports">
+                    <span class="nav-icon">📄</span>
+                    <span>Reports</span>
+                </a>
+            </nav>
 
-        <!-- Soil Tab -->
-        <div id="soilTab" class="tab-content">
-            <div class="card">
-                <div class="lang-buttons">
-                    <button class="lang-btn active" data-lang="english">🇬🇧 English</button>
-                    <button class="lang-btn" data-lang="kannada">🇮🇳 ಕನ್ನಡ</button>
+            <div class="sidebar-footer">
+                <div class="language-selector">
+                    <button class="lang-option active" data-lang="english">EN</button>
+                    <button class="lang-option" data-lang="kannada">ಕ</button>
                 </div>
-
-                <div class="upload-area" id="uploadArea">
-                    <p id="upload-text">📸 Click to upload soil photo</p>
-                    <input type="file" id="soilImage" accept="image/*" style="display: none">
-                    <img id="imagePreview" class="image-preview" style="display: none">
-                </div>
-
-                <div class="form-group">
-                    <label id="soil-label-land">🌍 Land Size (acres)</label>
-                    <input type="number" id="soil-land" step="0.5" placeholder="e.g., 2.5">
-                </div>
-
-                <div class="form-group">
-                    <label id="soil-label-budget">💰 Budget (₹)</label>
-                    <input type="number" id="soil-budget" placeholder="e.g., 25000">
-                </div>
-
-                <div class="form-group">
-                    <label id="soil-label-skills">👨‍👩‍👧‍👦 Family Skills</label>
-                    <div class="skills-grid" id="soilSkillsGrid"></div>
-                </div>
-
-                <button class="btn-primary" id="soilBtn">📸 Analyze Soil</button>
+                <a href="welcome.html" class="logout-btn">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </a>
             </div>
-        </div>
+        </aside>
 
-        <!-- Schemes Tab -->
-        <div id="schemesTab" class="tab-content">
-            <div class="card">
-                <div class="lang-buttons">
-                    <button class="lang-btn active" data-lang="english">🇬🇧 English</button>
-                    <button class="lang-btn" data-lang="kannada">🇮🇳 ಕನ್ನಡ</button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title" id="pageTitle">Dashboard</div>
+                <div class="user-info">
+                    <span class="farmer-name">👨‍🌾 Namaskara, Farmer</span>
+                    <button class="arya-mini-btn" id="openArya">🤖 Arya</button>
                 </div>
-                <div id="schemesList" class="schemes-container"></div>
-            </div>
-        </div>
+            </header>
 
-        <div id="results"></div>
+            <div class="content-area" id="contentArea">
+                <!-- Dashboard Page -->
+                <div id="dashboardPage" class="page active">
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-value" id="incomeStability">40% → 95%</div>
+                            <div class="stat-label">Income Stability</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="incomeSources">1-2 → 4-6</div>
+                            <div class="stat-label">Income Sources</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="monthlyIncome">₹0</div>
+                            <div class="stat-label">Monthly Income</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="waterSaved">-55%</div>
+                            <div class="stat-label">Water Dependency</div>
+                        </div>
+                    </div>
+
+                    <div class="welcome-section">
+                        <h2>Welcome to Sahayak AI</h2>
+                        <p>Your personal AI assistant for climate-resilient farming. Get started by filling your farmer details or analyzing your soil.</p>
+                        <div class="quick-actions">
+                            <button class="quick-btn" onclick="navigateTo('farmer')">📝 Fill Farmer Details</button>
+                            <button class="quick-btn" onclick="navigateTo('soil')">📸 Analyze Soil</button>
+                            <button class="quick-btn" onclick="openArya()">🗣️ Talk to Arya</button>
+                        </div>
+                    </div>
+
+                    <div class="recent-recommendations">
+                        <h3>Recent Recommendations</h3>
+                        <div id="recentRecommendations">
+                            <p class="empty-state">No recommendations yet. Fill your details to get started.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farmer Page -->
+                <div id="farmerPage" class="page">
+                    <div class="card">
+                        <h2>Farmer Details</h2>
+                        <div class="lang-buttons">
+                            <button class="lang-btn active" data-lang="english">🇬🇧 English</button>
+                            <button class="lang-btn" data-lang="kannada">🇮🇳 ಕನ್ನಡ</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="label-land">🌍 Land Size (acres)</label>
+                            <input type="number" id="land" step="0.5" placeholder="e.g., 2.5">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="label-water">💧 Water Availability</label>
+                            <select id="water">
+                                <option value="low">Low / ಕಡಿಮೆ</option>
+                                <option value="moderate">Moderate / ಮಧ್ಯಮ</option>
+                                <option value="high">High / ಹೆಚ್ಚು</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="label-budget">💰 Budget (₹)</label>
+                            <input type="number" id="budget" placeholder="e.g., 25000">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="label-skills">👨‍👩‍👧‍👦 Family Skills</label>
+                            <div class="skills-grid" id="skillsGrid"></div>
+                        </div>
+
+                        <button class="btn-primary" id="submitBtn">🔍 Get Recommendations</button>
+                    </div>
+                </div>
+
+                <!-- Soil Page -->
+                <div id="soilPage" class="page">
+                    <div class="card">
+                        <h2>Soil Analysis</h2>
+                        <div class="lang-buttons">
+                            <button class="lang-btn active" data-lang="english">🇬🇧 English</button>
+                            <button class="lang-btn" data-lang="kannada">🇮🇳 ಕನ್ನಡ</button>
+                        </div>
+
+                        <div class="upload-area" id="uploadArea">
+                            <p id="upload-text">📸 Click to upload soil photo</p>
+                            <input type="file" id="soilImage" accept="image/*" style="display: none">
+                            <img id="imagePreview" class="image-preview" style="display: none">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="soil-label-land">🌍 Land Size (acres)</label>
+                            <input type="number" id="soil-land" step="0.5" placeholder="e.g., 2.5">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="soil-label-budget">💰 Budget (₹)</label>
+                            <input type="number" id="soil-budget" placeholder="e.g., 25000">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="soil-label-skills">👨‍👩‍👧‍👦 Family Skills</label>
+                            <div class="skills-grid" id="soilSkillsGrid"></div>
+                        </div>
+
+                        <button class="btn-primary" id="soilBtn">📸 Analyze Soil</button>
+                    </div>
+                </div>
+
+                <!-- Schemes Page -->
+                <div id="schemesPage" class="page">
+                    <div class="card">
+                        <h2>Government Schemes</h2>
+                        <div class="lang-buttons">
+                            <button class="lang-btn active" data-lang="english">🇬🇧 English</button>
+                            <button class="lang-btn" data-lang="kannada">🇮🇳 ಕನ್ನಡ</button>
+                        </div>
+                        <div id="schemesList" class="schemes-container"></div>
+                    </div>
+                </div>
+
+                <!-- Skills Page -->
+                <div id="skillsPage" class="page">
+                    <div class="card">
+                        <h2>Family Skills to Monetize</h2>
+                        <div class="skills-showcase" id="skillsShowcase"></div>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div id="reportsPage" class="page">
+                    <div class="card">
+                        <h2>Your Reports</h2>
+                        <div id="reportsList" class="reports-container">
+                            <p class="empty-state">No reports yet. Generate recommendations to see your reports here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="results-container"></div>
+        </main>
     </div>
 
     <!-- Arya Voice Assistant -->
-    <button class="arya-btn" id="aryaBtn">🤖</button>
     <div class="arya-chat" id="aryaChat">
         <div class="arya-header">
             <span>🤖 ಆರ್ಯ - Your Assistant</span>
