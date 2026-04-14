@@ -481,7 +481,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Agent Arya Styles - No Voice */
+        /* Agent Arya Styles - Text Chat Only */
         .arya-container {
             position: fixed;
             bottom: 24px;
@@ -826,8 +826,8 @@
                         <h2 id="welcomeTitle">Welcome to Sahayak AI</h2>
                         <p id="welcomeDesc">Your personal AI assistant for climate-resilient farming. No login needed!</p>
                         <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
-                            <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="switchPage('farmer')" id="fillDetailsBtn">📝 Fill Details</button>
-                            <button class="btn-primary" style="width: auto; padding: 10px 20px; background: #3b82f6;" onclick="switchPage('soil')" id="soilAnalysisBtn">📸 Soil Analysis</button>
+                            <button class="btn-primary" style="width: auto; padding: 10px 20px;" id="fillDetailsBtn">📝 Fill Details</button>
+                            <button class="btn-primary" style="width: auto; padding: 10px 20px; background: #3b82f6;" id="soilAnalysisQuickBtn">📸 Soil Analysis</button>
                         </div>
                     </div>
 
@@ -1112,7 +1112,7 @@
             }
         };
 
-        // COMPLETE SKILLS LIST WITH 20+ TRADITIONAL SKILLS
+        // COMPLETE SKILLS LIST
         const SKILLS_LIST = [
             { id: "lambani", name: "Lambani (Banjara) Embroidery", kn: "ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ", setup: 2000, monthly: 4000, training: "Lambani Craft Center, Hampi", water: "Zero" },
             { id: "kaudi", name: "Kaudi Patchwork (Traditional Quilt)", kn: "ಕೌಡಿ ಪ್ಯಾಚ್ವರ್ಕ್", setup: 3000, monthly: 5000, training: "SHG Hubli-Dharwad", water: "Zero" },
@@ -1153,7 +1153,7 @@
             document.getElementById('welcomeTitle').innerText = t.welcomeTitle;
             document.getElementById('welcomeDesc').innerText = t.welcomeDesc;
             document.getElementById('fillDetailsBtn').innerHTML = t.fillDetailsBtn;
-            document.getElementById('soilAnalysisBtn').innerHTML = t.soilAnalysisBtn;
+            document.getElementById('soilAnalysisQuickBtn').innerHTML = t.soilAnalysisBtn;
             document.getElementById('recentTitle').innerText = t.recentTitle;
             const noReportsMsg = document.getElementById('noReportsMsg');
             if (noReportsMsg) noReportsMsg.innerText = t.noReportsMsg;
@@ -1162,4 +1162,496 @@
             document.getElementById('labelOr').innerText = t.labelOr;
             document.getElementById('getLocationBtn').innerHTML = t.getLocationBtn;
             document.getElementById('labelLand').innerText = t.labelLand;
-            document.getElementById('labelWater').innerText =
+            document.getElementById('labelWater').innerText = t.labelWater;
+            document.getElementById('labelBudget').innerText = t.labelBudget;
+            document.getElementById('labelSkills').innerText = t.labelSkills;
+            document.getElementById('getRecommendationsBtn').innerHTML = t.getRecommendationsBtn;
+            document.getElementById('soilTitle').innerText = t.soilTitle;
+            document.getElementById('uploadText').innerText = t.uploadText;
+            document.getElementById('soilLabelLand').innerText = t.soilLabelLand;
+            document.getElementById('soilLabelBudget').innerText = t.soilLabelBudget;
+            document.getElementById('soilLabelSkills').innerText = t.soilLabelSkills;
+            document.getElementById('analyzeSoilBtn').innerHTML = t.analyzeSoilBtn;
+            document.getElementById('skillsTitle').innerText = t.skillsTitle;
+            document.getElementById('skillsDesc').innerText = t.skillsDesc;
+            document.getElementById('schemesTitle').innerText = t.schemesTitle;
+            document.getElementById('reportsTitle').innerText = t.reportsTitle;
+            const clearBtn = document.getElementById('clearReportsBtn');
+            if (clearBtn) clearBtn.innerHTML = t.clearReportsBtn;
+        }
+
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(`${pageName}Page`).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${pageName}"]`).classList.add('active');
+            const titles = { 
+                dashboard: currentLanguage === 'kannada' ? 'ಡ್ಯಾಶ್ಬೋರ್ಡ್' : 'Dashboard', 
+                farmer: currentLanguage === 'kannada' ? 'ರೈತರ ಮಾಹಿತಿ' : 'Farmer Details', 
+                soil: currentLanguage === 'kannada' ? 'ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ' : 'Soil Analysis', 
+                skills: currentLanguage === 'kannada' ? 'ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು' : 'Family Skills', 
+                schemes: currentLanguage === 'kannada' ? 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು' : 'Government Schemes', 
+                reports: currentLanguage === 'kannada' ? 'ನನ್ನ ವರದಿಗಳು' : 'My Reports' 
+            };
+            document.getElementById('pageTitle').innerText = titles[pageName];
+            if (pageName === 'schemes') loadSchemes();
+            if (pageName === 'skills') loadSkills();
+            if (pageName === 'reports') loadReports();
+        }
+
+        function renderSkills(containerId, selectedArray, onClickFn, lang) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            SKILLS_LIST.forEach(skill => {
+                const isSelected = selectedArray.includes(skill.id);
+                const chip = document.createElement('div');
+                chip.className = `skill-chip ${isSelected ? 'selected' : ''}`;
+                chip.onclick = () => onClickFn(skill.id);
+                chip.innerHTML = `<input type="checkbox" ${isSelected ? 'checked' : ''}> <span>${lang === 'kannada' ? skill.kn : skill.name}</span>`;
+                container.appendChild(chip);
+            });
+        }
+
+        function toggleSkill(skillId) {
+            const index = selectedSkills.indexOf(skillId);
+            if (index === -1) selectedSkills.push(skillId);
+            else selectedSkills.splice(index, 1);
+            renderSkills('skillsGrid', selectedSkills, toggleSkill, currentLanguage);
+        }
+
+        function toggleSoilSkill(skillId) {
+            const index = selectedSoilSkills.indexOf(skillId);
+            if (index === -1) selectedSoilSkills.push(skillId);
+            else selectedSoilSkills.splice(index, 1);
+            renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, soilLanguage);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('engLangOption').classList.remove('active');
+            document.getElementById('kanLangOption').classList.remove('active');
+            if (lang === 'english') document.getElementById('engLangOption').classList.add('active');
+            else document.getElementById('kanLangOption').classList.add('active');
+            document.querySelectorAll('#farmerPage .lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            });
+            updateUILanguage();
+            renderSkills('skillsGrid', selectedSkills, toggleSkill, lang);
+            loadSkills();
+            loadSchemes();
+        }
+
+        function setSoilLanguage(lang) {
+            soilLanguage = lang;
+            document.querySelectorAll('#soilPage .lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            });
+            renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, lang);
+        }
+
+        function setSchemesLanguage(lang) {
+            schemesLanguage = lang;
+            loadSchemes();
+        }
+
+        // Location detection
+        document.getElementById('getLocationBtn').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    try {
+                        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                        const data = await response.json();
+                        const district = data.address?.state_district || data.address?.county || "";
+                        const districtSelect = document.getElementById('district');
+                        for(let i = 0; i < districtSelect.options.length; i++) {
+                            if(districtSelect.options[i].text.toLowerCase().includes(district.toLowerCase())) {
+                                districtSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+                        alert(`Location detected: ${district}\nLatitude: ${lat}\nLongitude: ${lon}`);
+                    } catch (error) {
+                        alert(`Location detected!\nLatitude: ${lat}\nLongitude: ${lon}\nPlease select your district manually.`);
+                    }
+                }, () => {
+                    alert('Unable to get your location. Please select district manually.');
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        });
+
+        // Get Recommendations
+        async function getRecommendations() {
+            const land = document.getElementById('land').value;
+            const water = document.getElementById('water').value;
+            const budget = document.getElementById('budget').value;
+            const district = document.getElementById('district').value;
+            if (!land || !budget) {
+                alert(currentLanguage === 'kannada' ? 'ದಯವಿಟ್ಟು ಜಮೀನು ಮತ್ತು ಬಜೆಟ್ ನಮೂದಿಸಿ' : 'Please enter land and budget');
+                return;
+            }
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<div class="loading"><div class="spinner"></div><p>${currentLanguage === 'kannada' ? 'ವಿಶ್ಲೇಷಿಸುತ್ತಿದೆ...' : 'Analyzing...'}</p></div>`;
+            try {
+                const response = await fetch('/api/recommend', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        land_acres: parseFloat(land),
+                        water: water,
+                        budget: parseFloat(budget),
+                        skills: selectedSkills,
+                        language: currentLanguage,
+                        district: district
+                    })
+                });
+                const data = await response.json();
+                displayResults(data);
+                let recent = JSON.parse(localStorage.getItem('sahayak_recent') || '[]');
+                recent.unshift({ date: new Date().toLocaleString(), crops: data.crops.map(c => c.display_name).join(', '), income: data.summary.monthly_income });
+                recent = recent.slice(0, 5);
+                localStorage.setItem('sahayak_recent', JSON.stringify(recent));
+                loadReports();
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="result-section"><p style="color:red;">Error: ${error.message}</p></div>`;
+            }
+        }
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            const isKn = currentLanguage === 'kannada';
+            let html = `<div class="result-section">
+                <div class="result-title">📋 ${isKn ? 'ನಿಮ್ಮ ಯೋಜನೆ' : 'Your Plan'}</div>
+                <div class="result-title">🌽 ${isKn ? 'ಸೂಕ್ತ ಬೆಳೆಗಳು' : 'Recommended Crops'}</div>
+                <div class="result-grid">`;
+            data.crops.forEach(c => html += `<div class="result-card"><h4>${c.display_name}</h4><p>💰 Profit: ₹${c.profit}/acre</p><p>⏱️ ROI: ${c.roi} months</p></div>`);
+            html += `</div><div class="result-title">🐐 ${isKn ? 'ಜಾನುವಾರು' : 'Livestock'}</div><div class="result-grid">`;
+            data.livestock.forEach(l => html += `<div class="result-card"><h4>${l.display_name}</h4><p>💰 Setup: ₹${l.setup}</p><p>📈 Monthly: ₹${l.monthly}</p></div>`);
+            html += `</div><div class="result-title">👩‍🎨 ${isKn ? 'ಕೌಶಲ್ಯಗಳು' : 'Skills'}</div><div class="result-grid">`;
+            data.skills.forEach(s => html += `<div class="result-card"><h4>${s.display_name}</h4><p>💰 Setup: ₹${s.setup}</p><p>📈 Monthly: ₹${s.monthly}</p></div>`);
+            html += `</div><div class="summary-box"><div class="summary-grid">
+                <div class="summary-item"><div class="value">₹${data.summary.total_setup}</div><div>${isKn ? 'ವೆಚ್ಚ' : 'Setup'}</div></div>
+                <div class="summary-item"><div class="value">₹${data.summary.monthly_income}</div><div>${isKn ? 'ಮಾಸಿಕ ಆದಾಯ' : 'Monthly'}</div></div>
+                <div class="summary-item"><div class="value">${data.summary.stability}</div><div>${isKn ? 'ಸ್ಥಿರತೆ' : 'Stability'}</div></div>
+            </div></div></div>`;
+            resultsDiv.innerHTML = html;
+            document.getElementById('dashboardIncome').innerHTML = `₹${data.summary.monthly_income}`;
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Soil Analysis
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function analyzeSoil() {
+            const file = document.getElementById('soilImage').files[0];
+            const land = document.getElementById('soil-land').value;
+            const budget = document.getElementById('soil-budget').value;
+            if (!file || !land || !budget) {
+                alert(soilLanguage === 'kannada' ? 'ದಯವಿಟ್ಟು ಫೋಟೋ, ಜಮೀನು ಮತ್ತು ಬಜೆಟ್ ನಮೂದಿಸಿ' : 'Please upload photo, enter land and budget');
+                return;
+            }
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<div class="loading"><div class="spinner"></div><p>${soilLanguage === 'kannada' ? 'ಮಣ್ಣು ವಿಶ್ಲೇಷಿಸುತ್ತಿದೆ...' : 'Analyzing soil...'}</p></div>`;
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('land_acres', land);
+            formData.append('budget', budget);
+            formData.append('skills', JSON.stringify(selectedSoilSkills));
+            formData.append('language', soilLanguage);
+            try {
+                const response = await fetch('/api/soil/analyze', { method: 'POST', body: formData });
+                const data = await response.json();
+                const isKn = soilLanguage === 'kannada';
+                resultsDiv.innerHTML = `<div class="result-section">
+                    <div class="result-title">📸 ${isKn ? 'ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ' : 'Soil Analysis'}</div>
+                    <div class="summary-box"><h3>🌱 ${isKn ? 'ಮಣ್ಣಿನ ಪ್ರಕಾರ' : 'Soil Type'}: ${data.soil_analysis.type}</h3>
+                    <p>💧 ${isKn ? 'ನೀರು ಧಾರಣ' : 'Water Holding'}: ${data.soil_analysis.water_holding}</p>
+                    <p>📊 Confidence: ${data.soil_analysis.confidence}%</p></div>
+                    <div class="result-title">🌽 ${isKn ? 'ಸೂಕ್ತ ಬೆಳೆಗಳು' : 'Recommended Crops'}</div>
+                    <div class="result-grid">${data.recommendations.crops.map(c => `<div class="result-card"><h4>${c.display_name}</h4><p>💰 Profit: ₹${c.profit}/acre</p></div>`).join('')}</div>
+                </div>`;
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="result-section"><p style="color:red;">Error: ${error.message}</p></div>`;
+            }
+        }
+
+        // Load Schemes
+        async function loadSchemes() {
+            const container = document.getElementById('schemesList');
+            try {
+                const response = await fetch(`/api/schemes?language=${schemesLanguage}`);
+                const data = await response.json();
+                let html = '<div class="cards-container">';
+                data.schemes.forEach(scheme => {
+                    html += `<div class="info-card">
+                        <h3>${scheme.display_name}</h3>
+                        <div class="subsidy">🎯 ${scheme.subsidy}</div>
+                        <div class="info-detail"><span>💰 Max Loan:</span> ${scheme.loan}</div>
+                        <div class="info-detail"><span>📋 Eligibility:</span> ${scheme.display_eligibility}</div>
+                        <div class="info-detail"><span>📄 Documents:</span> ${scheme.display_documents}</div>
+                        <div class="info-detail"><span>📞 Contact:</span> ${scheme.display_contact}</div>
+                        <div class="info-detail"><span>🏷️ Category:</span> ${scheme.display_category || scheme.category}</div>
+                        <div class="deadline">⏰ Deadline: ${scheme.deadline}</div>
+                        <a href="${scheme.application_link}" target="_blank" class="apply-btn">📝 Apply Now</a>
+                    </div>`;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = '<p style="color:red;">Error loading schemes</p>';
+            }
+        }
+
+        // Load Skills
+        async function loadSkills() {
+            const container = document.getElementById('skillsList');
+            try {
+                const response = await fetch(`/api/skills?language=${currentLanguage}`);
+                const data = await response.json();
+                let html = '<div class="cards-container">';
+                data.skills.forEach(skill => {
+                    html += `<div class="info-card">
+                        <h3>${skill.display_name}</h3>
+                        <div class="subsidy">💰 Setup: ₹${skill.setup} | Monthly: ₹${skill.monthly}</div>
+                        <div class="info-detail"><span>🎓 Training:</span> ${skill.display_training || skill.training}</div>
+                        <div class="info-detail"><span>💧 Water:</span> ${skill.water} water required</div>
+                    </div>`;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = '<p style="color:red;">Error loading skills</p>';
+            }
+        }
+
+        // Load Reports
+        function loadReports() {
+            const recent = JSON.parse(localStorage.getItem('sahayak_recent') || '[]');
+            const container = document.getElementById('reportsList');
+            const recentContainer = document.getElementById('recentRecommendations');
+            if (recent.length === 0) {
+                const msg = currentLanguage === 'kannada' ? 'ಇನ್ನೂ ಯಾವುದೇ ವರದಿಗಳಿಲ್ಲ.' : 'No reports yet.';
+                if (container) container.innerHTML = `<p style="text-align:center;padding:40px;color:#6b7280;">${msg}</p>`;
+                if (recentContainer) recentContainer.innerHTML = `<p style="text-align:center;padding:20px;color:#6b7280;">${currentLanguage === 'kannada' ? 'ಇನ್ನೂ ಯಾವುದೇ ಸಲಹೆಗಳಿಲ್ಲ.' : 'No recommendations yet.'}</p>`;
+                return;
+            }
+            let html = '';
+            recent.forEach(item => {
+                html += `<div style="padding:12px;border-bottom:1px solid #e5e7eb;">
+                    <div style="font-size:12px;color:#6b7280;">📅 ${item.date}</div>
+                    <div style="font-weight:600;color:#166534;">🌾 ${item.crops}</div>
+                    <div style="color:#15803d;">💰 ₹${item.income}/month</div>
+                </div>`;
+            });
+            if (container) container.innerHTML = html;
+            if (recentContainer) recentContainer.innerHTML = html;
+        }
+
+        function clearReports() {
+            if (confirm(currentLanguage === 'kannada' ? 'ಎಲ್ಲಾ ವರದಿಗಳನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?' : 'Are you sure you want to clear all reports?')) {
+                localStorage.removeItem('sahayak_recent');
+                loadReports();
+            }
+        }
+
+        // ========== AGENT ARYA - TEXT CHAT ONLY ==========
+        const aryaButton = document.getElementById('aryaButton');
+        const aryaChat = document.getElementById('aryaChat');
+        const aryaCloseBtn = document.getElementById('aryaCloseBtn');
+        const aryaInput = document.getElementById('aryaInput');
+        const aryaSendBtn = document.getElementById('aryaSendBtn');
+        const aryaMessages = document.getElementById('aryaMessages');
+
+        aryaButton.addEventListener('click', () => {
+            aryaChat.classList.toggle('open');
+        });
+
+        aryaCloseBtn.addEventListener('click', () => {
+            aryaChat.classList.remove('open');
+        });
+
+        function addAryaMessage(text, isUser = false) {
+            const messagesDiv = document.getElementById('aryaMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'arya-message'}`;
+            
+            if (isUser) {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">👨‍🌾</div>
+                    <div class="message-bubble">${text}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble">${text}</div>
+                `;
+            }
+            messagesDiv.appendChild(messageDiv);
+            messageDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message arya-message';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="typing-indicator"><span></span><span></span><span></span></div>
+            `;
+            aryaMessages.appendChild(typingDiv);
+            typingDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function processUserMessage(message) {
+            addAryaMessage(message, true);
+            showTypingIndicator();
+            
+            const lowerMsg = message.toLowerCase();
+            let response = '';
+            
+            // Crops
+            if (lowerMsg.includes('crop') || lowerMsg.includes('ಬೆಳೆ') || lowerMsg.includes('jowar') || lowerMsg.includes('ragi')) {
+                response = currentLanguage === 'kannada' 
+                    ? "🌾 ಕಡಿಮೆ ನೀರಿಗೆ: ಜೋಳ, ರಾಗಿ, ತೊಗರಿಬೇಳೆ, ಕಡಲೆಕಾಯಿ. ಮಧ್ಯಮ ನೀರಿಗೆ: ಹತ್ತಿ, ಮೆಕ್ಕೆಜೋಳ. ಹೆಚ್ಚು ನೀರಿಗೆ: ಕಬ್ಬು, ದಾಳಿಂಬೆ."
+                    : "🌾 For low water: Jowar, Ragi, Tur Dal, Groundnut. For moderate water: Cotton, Maize. For high water: Sugarcane, Pomegranate.";
+            }
+            // Lambani
+            else if (lowerMsg.includes('lambani') || lowerMsg.includes('ಲಂಬಾಣಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🎨 ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ: ಹಂಪಿ ಪ್ರದೇಶದ ಪ್ರಸಿದ್ಧ ಕಲೆ. ವೆಚ್ಚ ₹2,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. ತರಬೇತಿ: ಲಂಬಾಣಿ ಕ್ರಾಫ್ಟ್ ಸೆಂಟರ್, ಹಂಪಿ."
+                    : "🎨 Lambani embroidery: Famous art from Hampi region. Setup ₹2,000, monthly ₹4,000. Training: Lambani Craft Center, Hampi.";
+            }
+            // Ilkal
+            else if (lowerMsg.includes('ilkal') || lowerMsg.includes('ಇಳಕಲ್')) {
+                response = currentLanguage === 'kannada'
+                    ? "👘 ಇಳಕಲ್ ಸೀರೆ ನೇಯ್ಗೆ: ಬಾಗಲಕೋಟೆ ಜಿಲ್ಲೆಯ GI ಟ್ಯಾಗ್ ಉತ್ಪನ್ನ. ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹10,000."
+                    : "👘 Ilkal saree weaving: GI-tagged product from Bagalkot. Setup ₹15,000, monthly ₹10,000.";
+            }
+            // Byadgi
+            else if (lowerMsg.includes('byadgi') || lowerMsg.includes('ಬ್ಯಾಡಗಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🌶️ ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ ಮಸಾಲೆ ಪುಡಿ: ಹಾವೇರಿ ಜಿಲ್ಲೆಯ ಪ್ರಸಿದ್ಧ ಉತ್ಪನ್ನ. ವೆಚ್ಚ ₹8,000, ಮಾಸಿಕ ಆದಾಯ ₹12,000."
+                    : "🌶️ Byadgi chilli spice powder: Famous product from Haveri. Setup ₹8,000, monthly ₹12,000.";
+            }
+            // Bidri
+            else if (lowerMsg.includes('bidri') || lowerMsg.includes('ಬಿದ್ರಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🎨 ಬಿದ್ರಿ ಕೆಲಸ: ಬೀದರ್ನ ಪ್ರಸಿದ್ಧ ಕಲೆ. ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ತರಬೇತಿ: ಕೆವಿಐಸಿ ಬೀದರ್."
+                    : "🎨 Bidri work: Famous art from Bidar. Setup ₹5,000, monthly ₹5,000. Training: KVIC Bidar.";
+            }
+            // Schemes/Subsidy
+            else if (lowerMsg.includes('subsidy') || lowerMsg.includes('ಸಬ್ಸಿಡಿ') || lowerMsg.includes('scheme')) {
+                response = currentLanguage === 'kannada'
+                    ? "🏦 ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು: PMEGP 35% ಸಬ್ಸಿಡಿ, KVIC 40% ಸಬ್ಸಿಡಿ, KUSUM 60% ಸಬ್ಸಿಡಿ, PM-KISAN ₹6,000/ವರ್ಷ."
+                    : "🏦 Government Schemes: PMEGP 35% subsidy, KVIC 40% subsidy, KUSUM 60% subsidy, PM-KISAN ₹6,000/year.";
+            }
+            // Livestock
+            else if (lowerMsg.includes('goat') || lowerMsg.includes('ಮೇಕೆ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🐐 ಮೇಕೆ ಸಾಕಣೆ: 5 ಮೇಕೆಗಳಿಗೆ ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. NABARD ಸಾಲ ಸೌಲಭ್ಯವಿದೆ."
+                    : "🐐 Goat rearing: 5 goats cost ₹15,000, monthly income ₹4,000. NABARD loans available.";
+            }
+            // Soil
+            else if (lowerMsg.includes('soil') || lowerMsg.includes('ಮಣ್ಣು')) {
+                response = currentLanguage === 'kannada'
+                    ? "🌱 ಮಣ್ಣಿನ ವಿಧಗಳು: ಕೆಂಪು ಮಣ್ಣು, ಕಪ್ಪು ಮಣ್ಣು, ಮೆಕ್ಕಲು ಮಣ್ಣು, ಲ್ಯಾಟರೈಟ್ ಮಣ್ಣು."
+                    : "🌱 Soil types: Red soil, Black soil, Alluvial soil, Laterite soil.";
+            }
+            // Help
+            else if (lowerMsg.includes('help') || lowerMsg.includes('ಸಹಾಯ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🤖 ನಾನು ಸಹಾಯ ಮಾಡಬಲ್ಲ ವಿಷಯಗಳು:\n\n🌾 ಬೆಳೆಗಳು - 'ಯಾವ ಬೆಳೆ?'\n🎨 ಕೌಶಲ್ಯಗಳು - 'ಲಂಬಾಣಿ', 'ಇಳಕಲ್', 'ಬ್ಯಾಡಗಿ', 'ಬಿದ್ರಿ'\n🏦 ಯೋಜನೆಗಳು - 'ಸಬ್ಸಿಡಿ'\n🐐 ಜಾನುವಾರು - 'ಮೇಕೆ ಸಾಕಣೆ'"
+                    : "🤖 I can help with:\n\n🌾 Crops - 'Which crops?'\n🎨 Skills - 'Lambani', 'Ilkal', 'Byadgi', 'Bidri'\n🏦 Schemes - 'Subsidy'\n🐐 Livestock - 'Goat rearing'";
+            }
+            // Default
+            else {
+                response = currentLanguage === 'kannada'
+                    ? "ಕ್ಷಮಿಸಿ, ನಾನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಬೆಳೆ, ಕೌಶಲ್ಯ, ಯೋಜನೆ, ಅಥವಾ ಜಾನುವಾರು ಬಗ್ಗೆ ಕೇಳಿ. ಸಹಾಯಕ್ಕಾಗಿ 'help' ಟೈಪ್ ಮಾಡಿ."
+                    : "Sorry, I didn't understand. Please ask about crops, skills, schemes, or livestock. Type 'help' for assistance.";
+            }
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                addAryaMessage(response, false);
+            }, 500);
+        }
+
+        aryaSendBtn.addEventListener('click', () => {
+            const message = aryaInput.value.trim();
+            if (message) {
+                processUserMessage(message);
+                aryaInput.value = '';
+            }
+        });
+
+        aryaInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const message = aryaInput.value.trim();
+                if (message) {
+                    processUserMessage(message);
+                    aryaInput.value = '';
+                }
+            }
+        });
+
+        // ========== EVENT LISTENERS ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.addEventListener('click', () => switchPage(nav.getAttribute('data-page')));
+            });
+            
+            // Buttons
+            document.getElementById('getRecommendationsBtn').addEventListener('click', getRecommendations);
+            document.getElementById('analyzeSoilBtn').addEventListener('click', analyzeSoil);
+            document.getElementById('clearReportsBtn').addEventListener('click', clearReports);
+            document.getElementById('fillDetailsBtn').addEventListener('click', () => switchPage('farmer'));
+            document.getElementById('soilAnalysisQuickBtn').addEventListener('click', () => switchPage('soil'));
+            
+            // Language selectors
+            document.getElementById('engLangOption').addEventListener('click', () => setLanguage('english'));
+            document.getElementById('kanLangOption').addEventListener('click', () => setLanguage('kannada'));
+            document.getElementById('engLangBtn').addEventListener('click', () => setLanguage('english'));
+            document.getElementById('kanLangBtn').addEventListener('click', () => setLanguage('kannada'));
+            document.getElementById('soilEngLangBtn').addEventListener('click', () => setSoilLanguage('english'));
+            document.getElementById('soilKanLangBtn').addEventListener('click', () => setSoilLanguage('kannada'));
+            document.getElementById('schemesEngLangBtn').addEventListener('click', () => setSchemesLanguage('english'));
+            document.getElementById('schemesKanLangBtn').addEventListener('click', () => setSchemesLanguage('kannada'));
+            
+            // Soil upload
+            document.getElementById('uploadArea').addEventListener('click', () => document.getElementById('soilImage').click());
+            document.getElementById('soilImage').addEventListener('change', (e) => previewImage(e.target));
+            
+            // Initial renders
+            renderSkills('skillsGrid', selectedSkills, toggleSkill, 'english');
+            renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, 'english');
+            loadSchemes();
+            loadSkills();
+            loadReports();
+        });
+    </script>
+</body>
+</html>
