@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahayak AI - Welcome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f3b2c 0%, #1a5c3e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34,197,94,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .logo span {
+            font-size: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #166534;
+        }
+
+        .get-started-btn {
+            background: linear-gradient(135deg, #15803d, #166534);
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 100px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 .highlight {
+            color: #bbf7d0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #166534;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: #166534;
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 80px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #166534;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: #f9fafb;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #166534;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .stat-label {
+            color: #374151;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f3b2c;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .navbar {
+                padding: 12px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .features {
+                padding: 50px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>🌾</span> Sahayak AI
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#impact">Impact</a>
+            <a href="index.html" class="get-started-btn">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>
+                Empowering <span class="highlight">Farmers</span><br>
+                with AI for a <span class="highlight">Resilient Future</span>
+            </h1>
+            <p>
+                Sahayak AI helps North Karnataka farmers diversify income,<br>
+                adapt to climate change, and achieve 95% income stability.
+            </p>
+            <div class="hero-buttons">
+                <a href="index.html" class="btn-primary">🌾 Start Your Journey</a>
+                <a href="#features" class="btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>What Sahayak AI Offers</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Personalized Plans</h3>
+                <p>Get customized crop, livestock, and skill recommendations based on your land, water, and budget.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗣️</div>
+                <h3>Voice Assistant "Arya"</h3>
+                <p>No typing needed. Just speak in Kannada or English and get instant answers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>Soil Analysis</h3>
+                <p>Take a photo of your soil. AI predicts soil type and recommends suitable crops.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👩‍🎨</div>
+                <h3>Family Skills</h3>
+                <p>Monetize traditional skills like Bidri work, embroidery, diya making, and pickles.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏦</div>
+                <h3>Government Schemes</h3>
+                <p>Direct links to PMEGP (35% subsidy), NABARD loans, and KVIC craft subsidies.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Multilingual</h3>
+                <p>Available in English and Kannada. More languages coming soon.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="impact">
+        <div class="stats-grid">
+            <div>
+                <div class="stat-number">40% → 95%</div>
+                <div class="stat-label">Income Stability Improvement</div>
+            </div>
+            <div>
+                <div class="stat-number">1-2 → 4-6</div>
+                <div class="stat-label">Income Sources per Family</div>
+            </div>
+            <div>
+                <div class="stat-number">₹19,000+</div>
+                <div class="stat-label">Average Monthly Family Income</div>
+            </div>
+            <div>
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Government Schemes Mapped</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>🌾 Sahayak AI - Climate-Resilient Livelihood Planner</p>
+        <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;">Empowering North Karnataka Farmers | Made with ❤️ for the farming community</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
