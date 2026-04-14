@@ -20,9 +20,13 @@ It integrates agriculture, livestock, and non-farm income sources to reduce depe
 Farmers provide the following details:
 
 👨‍🌾 Land size (acres)
+
 💧 Water availability (Low / Moderate / High)
+
 💰 Budget (₹)
+
 👩‍👩‍👧 Family skills (Bidri, embroidery, food processing, etc.)
+
 📸 Soil image (optional for soil analysis)
 
 ----
@@ -30,22 +34,42 @@ Farmers provide the following details:
 🎯 Output
 
 🌱 Recommended crops (based on soil & water)
+
 🐄 Livestock suggestions
+
 👩‍🎨 Skill-based income opportunities
+
 🏦 Government schemes with subsidies
+
 📈 Diversified income plan
+
+----
+
 🌟 Key Features
+
 📋 Personalized AI recommendations
+
 📸 Soil type prediction from images
+
 👩‍👩‍👧 Monetization of family skills
+
 🏦 Govt scheme integration (PMEGP, NABARD, KVIC, MGNREGA)
+
 🌐 Multilingual support (English + Kannada)
+
 🔓 No login required
+
+----
 📊 Impact
+
 📈 Income stability: 40% → 95%
+
 💼 Income sources: 1–2 → 4–6
+
 👩 Women’s income: 0–10% → 40–60%
+
 📉 Zero-income days: 150–200 → 30–50
+
 💧 Water dependency reduced significantly
 
 ----
