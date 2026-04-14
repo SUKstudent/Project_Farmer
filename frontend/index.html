@@ -481,6 +481,257 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Agent Arya Styles */
+        .arya-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+
+        .arya-button {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #15803d, #166534);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .arya-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(21,128,61,0.4);
+        }
+
+        .arya-icon {
+            font-size: 32px;
+        }
+
+        .arya-label {
+            font-size: 10px;
+            color: white;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .arya-pulse {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .arya-chat {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        .arya-chat.open {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .arya-header {
+            background: linear-gradient(135deg, #14532d, #166534);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .arya-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .arya-avatar {
+            font-size: 40px;
+        }
+
+        .arya-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .arya-status {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .arya-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .arya-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f5f7fb;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-avatar {
+            font-size: 32px;
+        }
+
+        .message-bubble {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .user-message {
+            flex-direction: row-reverse;
+        }
+
+        .user-message .message-bubble {
+            background: #166534;
+            color: white;
+        }
+
+        .arya-message .message-bubble {
+            background: white;
+            color: #1f2937;
+        }
+
+        .arya-input-area {
+            padding: 12px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .arya-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 40px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .arya-input:focus {
+            border-color: #22c55e;
+        }
+
+        .arya-mic-btn, .arya-send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f3f4f6;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .arya-mic-btn:hover, .arya-send-btn:hover {
+            background: #e5e7eb;
+            transform: scale(1.05);
+        }
+
+        .arya-mic-btn.recording {
+            background: #ef4444;
+            color: white;
+            animation: micPulse 1s infinite;
+        }
+
+        @keyframes micPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 18px;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #9ca3af;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 80px;
@@ -495,6 +746,11 @@
             }
             .content-area {
                 padding: 16px;
+            }
+            .arya-chat {
+                width: 340px;
+                right: -10px;
+                bottom: 70px;
             }
         }
     </style>
@@ -603,7 +859,6 @@
                             <button class="lang-btn" data-lang="kannada" id="kanLangBtn">🇮🇳 ಕನ್ನಡ</button>
                         </div>
 
-                        <!-- Location Section -->
                         <div class="form-group">
                             <label id="labelLocation">📍 Select District</label>
                             <select id="district">
@@ -727,6 +982,56 @@
         </main>
     </div>
 
+    <!-- Agent Arya - Voice Assistant -->
+    <div class="arya-container" id="aryaContainer">
+        <div class="arya-button" id="aryaButton">
+            <div class="arya-icon">🤖</div>
+            <div class="arya-label">Arya</div>
+            <div class="arya-pulse"></div>
+        </div>
+        
+        <div class="arya-chat" id="aryaChat">
+            <div class="arya-header">
+                <div class="arya-header-left">
+                    <div class="arya-avatar">🤖</div>
+                    <div>
+                        <div class="arya-name">Agent Arya</div>
+                        <div class="arya-status">Online • Ready to help</div>
+                    </div>
+                </div>
+                <button class="arya-close" id="aryaCloseBtn">✕</button>
+            </div>
+            
+            <div class="arya-messages" id="aryaMessages">
+                <div class="message arya-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble">
+                        Namaste! I am Agent Arya, your farming assistant.<br><br>
+                        I can help you with:<br>
+                        • 📋 Farmer Details<br>
+                        • 📸 Soil Analysis<br>
+                        • 👩‍🎨 Family Skills<br>
+                        • 🏦 Government Schemes<br><br>
+                        <strong>Try asking me:</strong><br>
+                        "Which crops for low water?"<br>
+                        "Tell me about Bidri work"<br>
+                        "What subsidies are available?"
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arya-input-area">
+                <button class="arya-mic-btn" id="aryaMicBtn">
+                    <span class="mic-icon">🎤</span>
+                </button>
+                <input type="text" class="arya-input" id="aryaInput" placeholder="Ask me anything...">
+                <button class="arya-send-btn" id="aryaSendBtn">
+                    <span>📤</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ========== DATA ==========
         let currentLanguage = "english";
@@ -738,7 +1043,6 @@
         // Translation Dictionary
         const translations = {
             english: {
-                // Nav items
                 navDashboard: "Dashboard",
                 navFarmer: "Farmer Details",
                 navSoil: "Soil Analysis",
@@ -747,8 +1051,6 @@
                 navReports: "My Reports",
                 homeText: "Home",
                 farmerBadge: "👨‍🌾 Farmer",
-                
-                // Dashboard
                 statStability: "Income Stability",
                 statSources: "Income Sources",
                 statMonthly: "Monthly Income",
@@ -759,8 +1061,6 @@
                 soilAnalysisBtn: "📸 Soil Analysis",
                 recentTitle: "Recent Recommendations",
                 noReportsMsg: "No recommendations yet. Fill your details.",
-                
-                // Farmer Page
                 farmerTitle: "Farmer Details",
                 labelLocation: "📍 Select District",
                 labelOr: "OR",
@@ -770,28 +1070,19 @@
                 labelBudget: "💰 Budget (₹)",
                 labelSkills: "👨‍👩‍👧‍👦 Family Skills (Select all that apply)",
                 getRecommendationsBtn: "🔍 Get Recommendations",
-                
-                // Soil Page
                 soilTitle: "Soil Analysis",
                 uploadText: "📸 Click to upload soil photo",
                 soilLabelLand: "🌍 Land Size (acres)",
                 soilLabelBudget: "💰 Budget (₹)",
                 soilLabelSkills: "👨‍👩‍👧‍👦 Family Skills",
                 analyzeSoilBtn: "📸 Analyze Soil",
-                
-                // Skills Page
                 skillsTitle: "Family Skills to Monetize",
                 skillsDesc: "Traditional skills that can generate income with zero or low water requirement.",
-                
-                // Schemes Page
                 schemesTitle: "Government Schemes",
-                
-                // Reports Page
                 reportsTitle: "My Reports",
                 clearReportsBtn: "🗑️ Clear All Reports"
             },
             kannada: {
-                // Nav items
                 navDashboard: "ಡ್ಯಾಶ್ಬೋರ್ಡ್",
                 navFarmer: "ರೈತರ ಮಾಹಿತಿ",
                 navSoil: "ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ",
@@ -800,8 +1091,6 @@
                 navReports: "ನನ್ನ ವರದಿಗಳು",
                 homeText: "ಮುಖಪುಟ",
                 farmerBadge: "👨‍🌾 ರೈತ",
-                
-                // Dashboard
                 statStability: "ಆದಾಯ ಸ್ಥಿರತೆ",
                 statSources: "ಆದಾಯ ಮೂಲಗಳು",
                 statMonthly: "ಮಾಸಿಕ ಆದಾಯ",
@@ -812,8 +1101,6 @@
                 soilAnalysisBtn: "📸 ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ",
                 recentTitle: "ಇತ್ತೀಚಿನ ಸಲಹೆಗಳು",
                 noReportsMsg: "ಇನ್ನೂ ಯಾವುದೇ ಸಲಹೆಗಳಿಲ್ಲ. ನಿಮ್ಮ ಮಾಹಿತಿ ತುಂಬಿಸಿ.",
-                
-                // Farmer Page
                 farmerTitle: "ರೈತರ ಮಾಹಿತಿ",
                 labelLocation: "📍 ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
                 labelOr: "ಅಥವಾ",
@@ -823,23 +1110,15 @@
                 labelBudget: "💰 ಬಜೆಟ್ (₹)",
                 labelSkills: "👨‍👩‍👧‍👦 ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು (ಎಲ್ಲಾ ಆಯ್ಕೆಮಾಡಿ)",
                 getRecommendationsBtn: "🔍 ಸಲಹೆ ಪಡೆಯಿರಿ",
-                
-                // Soil Page
                 soilTitle: "ಮಣ್ಣು ವಿಶ್ಲೇಷಣೆ",
                 uploadText: "📸 ಮಣ್ಣಿನ ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ",
                 soilLabelLand: "🌍 ಜಮೀನು ಗಾತ್ರ (ಎಕರೆ)",
                 soilLabelBudget: "💰 ಬಜೆಟ್ (₹)",
                 soilLabelSkills: "👨‍👩‍👧‍👦 ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು",
                 analyzeSoilBtn: "📸 ಮಣ್ಣು ವಿಶ್ಲೇಷಿಸಿ",
-                
-                // Skills Page
                 skillsTitle: "ಹಣಗಳಿಸಬಹುದಾದ ಕುಟುಂಬ ಕೌಶಲ್ಯಗಳು",
                 skillsDesc: "ಶೂನ್ಯ ಅಥವಾ ಕಡಿಮೆ ನೀರಿನ ಅಗತ್ಯವಿರುವ ಸಾಂಪ್ರದಾಯಿಕ ಕೌಶಲ್ಯಗಳು.",
-                
-                // Schemes Page
                 schemesTitle: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು",
-                
-                // Reports Page
                 reportsTitle: "ನನ್ನ ವರದಿಗಳು",
                 clearReportsBtn: "🗑️ ಎಲ್ಲಾ ವರದಿಗಳನ್ನು ಅಳಿಸಿ"
             }
@@ -853,11 +1132,8 @@
             { id: "agarbatti", name: "Agarbatti Making", kn: "ಅಗರಬತ್ತಿ", setup: 4000, monthly: 7000, training: "KVIC", water: "Zero" }
         ];
 
-        // ========== UPDATE UI LANGUAGE ==========
         function updateUILanguage() {
             const t = translations[currentLanguage];
-            
-            // Update nav items
             document.getElementById('navDashboard').innerText = t.navDashboard;
             document.getElementById('navFarmer').innerText = t.navFarmer;
             document.getElementById('navSoil').innerText = t.navSoil;
@@ -866,8 +1142,6 @@
             document.getElementById('navReports').innerText = t.navReports;
             document.getElementById('homeText').innerText = t.homeText;
             document.getElementById('farmerBadge').innerHTML = t.farmerBadge;
-            
-            // Update dashboard
             document.getElementById('statStability').innerText = t.statStability;
             document.getElementById('statSources').innerText = t.statSources;
             document.getElementById('statMonthly').innerText = t.statMonthly;
@@ -879,8 +1153,6 @@
             document.getElementById('recentTitle').innerText = t.recentTitle;
             const noReportsMsg = document.getElementById('noReportsMsg');
             if (noReportsMsg) noReportsMsg.innerText = t.noReportsMsg;
-            
-            // Update farmer page
             document.getElementById('farmerTitle').innerText = t.farmerTitle;
             document.getElementById('labelLocation').innerText = t.labelLocation;
             document.getElementById('labelOr').innerText = t.labelOr;
@@ -890,52 +1162,25 @@
             document.getElementById('labelBudget').innerText = t.labelBudget;
             document.getElementById('labelSkills').innerText = t.labelSkills;
             document.getElementById('getRecommendationsBtn').innerHTML = t.getRecommendationsBtn;
-            
-            // Update soil page
             document.getElementById('soilTitle').innerText = t.soilTitle;
             document.getElementById('uploadText').innerText = t.uploadText;
             document.getElementById('soilLabelLand').innerText = t.soilLabelLand;
             document.getElementById('soilLabelBudget').innerText = t.soilLabelBudget;
             document.getElementById('soilLabelSkills').innerText = t.soilLabelSkills;
             document.getElementById('analyzeSoilBtn').innerHTML = t.analyzeSoilBtn;
-            
-            // Update skills page
             document.getElementById('skillsTitle').innerText = t.skillsTitle;
             document.getElementById('skillsDesc').innerText = t.skillsDesc;
-            
-            // Update schemes page
             document.getElementById('schemesTitle').innerText = t.schemesTitle;
-            
-            // Update reports page
             document.getElementById('reportsTitle').innerText = t.reportsTitle;
             const clearBtn = document.getElementById('clearReportsBtn');
             if (clearBtn) clearBtn.innerHTML = t.clearReportsBtn;
-            
-            // Update page title if on dashboard
-            const currentPage = document.querySelector('.page.active')?.id;
-            if (currentPage === 'dashboardPage') {
-                document.getElementById('pageTitle').innerText = t.navDashboard;
-            } else if (currentPage === 'farmerPage') {
-                document.getElementById('pageTitle').innerText = t.navFarmer;
-            } else if (currentPage === 'soilPage') {
-                document.getElementById('pageTitle').innerText = t.navSoil;
-            } else if (currentPage === 'skillsPage') {
-                document.getElementById('pageTitle').innerText = t.navSkills;
-            } else if (currentPage === 'schemesPage') {
-                document.getElementById('pageTitle').innerText = t.navSchemes;
-            } else if (currentPage === 'reportsPage') {
-                document.getElementById('pageTitle').innerText = t.navReports;
-            }
         }
 
-        // ========== HELPER FUNCTIONS ==========
         function switchPage(pageName) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(`${pageName}Page`).classList.add('active');
-            
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
             document.querySelector(`.nav-item[data-page="${pageName}"]`).classList.add('active');
-            
             const titles = { 
                 dashboard: currentLanguage === 'kannada' ? 'ಡ್ಯಾಶ್ಬೋರ್ಡ್' : 'Dashboard', 
                 farmer: currentLanguage === 'kannada' ? 'ರೈತರ ಮಾಹಿತಿ' : 'Farmer Details', 
@@ -945,7 +1190,6 @@
                 reports: currentLanguage === 'kannada' ? 'ನನ್ನ ವರದಿಗಳು' : 'My Reports' 
             };
             document.getElementById('pageTitle').innerText = titles[pageName];
-            
             if (pageName === 'schemes') loadSchemes();
             if (pageName === 'skills') loadSkills();
             if (pageName === 'reports') loadReports();
@@ -979,32 +1223,18 @@
             renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, soilLanguage);
         }
 
-        // ========== LANGUAGE SETTINGS ==========
         function setLanguage(lang) {
             currentLanguage = lang;
-            
-            // Update active state for sidebar language buttons
             document.getElementById('engLangOption').classList.remove('active');
             document.getElementById('kanLangOption').classList.remove('active');
-            if (lang === 'english') {
-                document.getElementById('engLangOption').classList.add('active');
-            } else {
-                document.getElementById('kanLangOption').classList.add('active');
-            }
-            
-            // Update active state for farmer page language buttons
+            if (lang === 'english') document.getElementById('engLangOption').classList.add('active');
+            else document.getElementById('kanLangOption').classList.add('active');
             document.querySelectorAll('#farmerPage .lang-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
             });
-            
-            // Update UI text
             updateUILanguage();
-            
-            // Update skills grid
             renderSkills('skillsGrid', selectedSkills, toggleSkill, lang);
-            
-            // Reload skills and schemes to update their language
             loadSkills();
             loadSchemes();
         }
@@ -1023,18 +1253,15 @@
             loadSchemes();
         }
 
-        // ========== LOCATION DETECTION ==========
         document.getElementById('getLocationBtn').addEventListener('click', () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
-                    
                     try {
                         const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
                         const data = await response.json();
                         const district = data.address?.state_district || data.address?.county || "";
-                        
                         const districtSelect = document.getElementById('district');
                         for(let i = 0; i < districtSelect.options.length; i++) {
                             if(districtSelect.options[i].text.toLowerCase().includes(district.toLowerCase())) {
@@ -1042,7 +1269,6 @@
                                 break;
                             }
                         }
-                        
                         alert(`Location detected: ${district}\nLatitude: ${lat}\nLongitude: ${lon}`);
                     } catch (error) {
                         alert(`Location detected!\nLatitude: ${lat}\nLongitude: ${lon}\nPlease select your district manually.`);
@@ -1055,21 +1281,17 @@
             }
         });
 
-        // ========== GET RECOMMENDATIONS ==========
         async function getRecommendations() {
             const land = document.getElementById('land').value;
             const water = document.getElementById('water').value;
             const budget = document.getElementById('budget').value;
             const district = document.getElementById('district').value;
-            
             if (!land || !budget) {
                 alert(currentLanguage === 'kannada' ? 'ದಯವಿಟ್ಟು ಜಮೀನು ಮತ್ತು ಬಜೆಟ್ ನಮೂದಿಸಿ' : 'Please enter land and budget');
                 return;
             }
-            
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `<div class="loading"><div class="spinner"></div><p>${currentLanguage === 'kannada' ? 'ವಿಶ್ಲೇಷಿಸುತ್ತಿದೆ...' : 'Analyzing...'}</p></div>`;
-            
             try {
                 const response = await fetch('/api/recommend', {
                     method: 'POST',
@@ -1085,7 +1307,6 @@
                 });
                 const data = await response.json();
                 displayResults(data);
-                
                 let recent = JSON.parse(localStorage.getItem('sahayak_recent') || '[]');
                 recent.unshift({ date: new Date().toLocaleString(), crops: data.crops.map(c => c.display_name).join(', '), income: data.summary.monthly_income });
                 recent = recent.slice(0, 5);
@@ -1099,7 +1320,6 @@
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
             const isKn = currentLanguage === 'kannada';
-            
             let locationHtml = '';
             if (data.location) {
                 locationHtml = `<div class="location-info">
@@ -1114,7 +1334,6 @@
                     💧 ${isKn ? 'ನೀರಿನ ಲಭ್ಯತೆ' : 'Water Availability'}: ${data.location.water}
                 </div>`;
             }
-            
             let html = `<div class="result-section">
                 ${locationHtml}
                 <div class="result-title">📋 ${isKn ? 'ನಿಮ್ಮ ಯೋಜನೆ' : 'Your Plan'}</div>
@@ -1130,13 +1349,11 @@
                 <div class="summary-item"><div class="value">₹${data.summary.monthly_income}</div><div>${isKn ? 'ಮಾಸಿಕ ಆದಾಯ' : 'Monthly'}</div></div>
                 <div class="summary-item"><div class="value">${data.summary.stability}</div><div>${isKn ? 'ಸ್ಥಿರತೆ' : 'Stability'}</div></div>
             </div></div></div>`;
-            
             resultsDiv.innerHTML = html;
             document.getElementById('dashboardIncome').innerHTML = `₹${data.summary.monthly_income}`;
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ========== SOIL ANALYSIS ==========
         function previewImage(input) {
             const file = input.files[0];
             if (file) {
@@ -1154,22 +1371,18 @@
             const file = document.getElementById('soilImage').files[0];
             const land = document.getElementById('soil-land').value;
             const budget = document.getElementById('soil-budget').value;
-            
             if (!file || !land || !budget) {
                 alert(soilLanguage === 'kannada' ? 'ದಯವಿಟ್ಟು ಫೋಟೋ, ಜಮೀನು ಮತ್ತು ಬಜೆಟ್ ನಮೂದಿಸಿ' : 'Please upload photo, enter land and budget');
                 return;
             }
-            
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `<div class="loading"><div class="spinner"></div><p>${soilLanguage === 'kannada' ? 'ಮಣ್ಣು ವಿಶ್ಲೇಷಿಸುತ್ತಿದೆ...' : 'Analyzing soil...'}</p></div>`;
-            
             const formData = new FormData();
             formData.append('file', file);
             formData.append('land_acres', land);
             formData.append('budget', budget);
             formData.append('skills', JSON.stringify(selectedSoilSkills));
             formData.append('language', soilLanguage);
-            
             try {
                 const response = await fetch('/api/soil/analyze', { method: 'POST', body: formData });
                 const data = await response.json();
@@ -1188,7 +1401,6 @@
             }
         }
 
-        // ========== LOAD FUNCTIONS ==========
         async function loadSchemes() {
             const container = document.getElementById('schemesList');
             try {
@@ -1239,14 +1451,12 @@
             const recent = JSON.parse(localStorage.getItem('sahayak_recent') || '[]');
             const container = document.getElementById('reportsList');
             const recentContainer = document.getElementById('recentRecommendations');
-            
             if (recent.length === 0) {
                 const msg = currentLanguage === 'kannada' ? 'ಇನ್ನೂ ಯಾವುದೇ ವರದಿಗಳಿಲ್ಲ.' : 'No reports yet.';
                 if (container) container.innerHTML = `<p style="text-align:center;padding:40px;color:#6b7280;">${msg}</p>`;
                 if (recentContainer) recentContainer.innerHTML = `<p style="text-align:center;padding:20px;color:#6b7280;">${currentLanguage === 'kannada' ? 'ಇನ್ನೂ ಯಾವುದೇ ಸಲಹೆಗಳಿಲ್ಲ.' : 'No recommendations yet.'}</p>`;
                 return;
             }
-            
             let html = '';
             recent.forEach(item => {
                 html += `<div style="padding:12px;border-bottom:1px solid #e5e7eb;">
@@ -1266,19 +1476,180 @@
             }
         }
 
+        // ========== AGENT ARYA VOICE ASSISTANT ==========
+        let aryaRecognition = null;
+        let isAryaListening = false;
+
+        const aryaButton = document.getElementById('aryaButton');
+        const aryaChat = document.getElementById('aryaChat');
+        const aryaCloseBtn = document.getElementById('aryaCloseBtn');
+        const aryaMicBtn = document.getElementById('aryaMicBtn');
+        const aryaInput = document.getElementById('aryaInput');
+        const aryaSendBtn = document.getElementById('aryaSendBtn');
+        const aryaMessages = document.getElementById('aryaMessages');
+
+        aryaButton.addEventListener('click', () => {
+            aryaChat.classList.toggle('open');
+        });
+
+        aryaCloseBtn.addEventListener('click', () => {
+            aryaChat.classList.remove('open');
+        });
+
+        function addAryaMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'arya-message'}`;
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? '👨‍🌾' : '🤖'}</div>
+                <div class="message-bubble">${text}</div>
+            `;
+            aryaMessages.appendChild(messageDiv);
+            messageDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message arya-message';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="typing-indicator"><span></span><span></span><span></span></div>
+            `;
+            aryaMessages.appendChild(typingDiv);
+            typingDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function processUserMessage(message) {
+            addAryaMessage(message, true);
+            showTypingIndicator();
+            
+            const lowerMsg = message.toLowerCase();
+            let response = '';
+            
+            if (lowerMsg.includes('crop') || lowerMsg.includes('ಬೆಳೆ')) {
+                response = currentLanguage === 'kannada' 
+                    ? "ಕಡಿಮೆ ನೀರಿಗೆ ಜೋಳ, ರಾಗಿ, ತೊಗರಿಬೇಳೆ ಉತ್ತಮ. ಮಧ್ಯಮ ನೀರಿಗೆ ಹತ್ತಿ, ಮೆಕ್ಕೆಜೋಳ. ಹೆಚ್ಚು ನೀರಿಗೆ ಕಬ್ಬು, ದಾಳಿಂಬೆ ಸೂಕ್ತ."
+                    : "For low water, Jowar, Ragi, and Tur Dal are good. For moderate water, Cotton and Maize. For high water, Sugarcane and Pomegranate.";
+            }
+            else if (lowerMsg.includes('bidri') || lowerMsg.includes('ಬಿದ್ರಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "ಬಿದ್ರಿ ಕೆಲಸ ಬೀದರ್ನ ಪ್ರಸಿದ್ಧ ಕಲೆ. ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ಕೆವಿಐಸಿ ಬೀದರ್ನಲ್ಲಿ ಉಚಿತ ತರಬೇತಿ."
+                    : "Bidri work is a famous art from Bidar. Setup cost ₹5,000, monthly income ₹5,000. Free training at KVIC Bidar.";
+            }
+            else if (lowerMsg.includes('subsidy') || lowerMsg.includes('ಸಬ್ಸಿಡಿ') || lowerMsg.includes('scheme')) {
+                response = currentLanguage === 'kannada'
+                    ? "PMEGP 35% ಸಬ್ಸಿಡಿ, KVIC 40% ಸಬ್ಸಿಡಿ, NABARD ಸಾಲ ಸೌಲಭ್ಯ. MGNREGA 100% ಸಬ್ಸಿಡಿ ನೀಡುತ್ತದೆ."
+                    : "PMEGP gives 35% subsidy, KVIC gives 40% for handicrafts, NABARD provides loans, MGNREGA gives 100% subsidy.";
+            }
+            else if (lowerMsg.includes('goat') || lowerMsg.includes('ಮೇಕೆ')) {
+                response = currentLanguage === 'kannada'
+                    ? "ಮೇಕೆ ಸಾಕಣೆ ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. ಕಡಿಮೆ ನೀರು ಬೇಕು. NABARD ಸಾಲ ಸೌಲಭ್ಯವಿದೆ."
+                    : "Goat rearing costs ₹15,000, monthly income ₹4,000. Needs low water. NABARD loans available.";
+            }
+            else if (lowerMsg.includes('soil') || lowerMsg.includes('ಮಣ್ಣು')) {
+                response = currentLanguage === 'kannada'
+                    ? "ಮಣ್ಣಿನ ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ. AI ಮಣ್ಣಿನ ಪ್ರಕಾರ ಪತ್ತೆ ಮಾಡಿ ಸೂಕ್ತ ಬೆಳೆಗಳನ್ನು ಶಿಫಾರಸು ಮಾಡುತ್ತದೆ."
+                    : "Upload a soil photo. AI will detect soil type and recommend suitable crops.";
+            }
+            else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('ನಮಸ್ಕಾರ')) {
+                response = currentLanguage === 'kannada'
+                    ? "ನಮಸ್ಕಾರ! ನಾನು ಆರ್ಯ, ನಿಮ್ಮ ಕೃಷಿ ಸಹಾಯಕ. ನಾನು ಬೆಳೆ, ಜಾನುವಾರು, ಬಿದ್ರಿ ಕೆಲಸ, ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಬಗ್ಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ."
+                    : "Hello! I am Arya, your farming assistant. I can help with crops, livestock, Bidri work, and government schemes.";
+            }
+            else {
+                response = currentLanguage === 'kannada'
+                    ? "ಕ್ಷಮಿಸಿ, ನಾನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಬೆಳೆ, ಬಿದ್ರಿ, ಸಬ್ಸಿಡಿ, ಅಥವಾ ಮಣ್ಣಿನ ಬಗ್ಗೆ ಕೇಳಿ."
+                    : "Sorry, I didn't understand. Please ask about crops, Bidri, subsidies, or soil.";
+            }
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                addAryaMessage(response, false);
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(response);
+                    utterance.lang = currentLanguage === 'kannada' ? 'kn-IN' : 'en-IN';
+                    utterance.rate = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                }
+            }, 1000);
+        }
+
+        aryaSendBtn.addEventListener('click', () => {
+            const message = aryaInput.value.trim();
+            if (message) {
+                processUserMessage(message);
+                aryaInput.value = '';
+            }
+        });
+
+        aryaInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const message = aryaInput.value.trim();
+                if (message) {
+                    processUserMessage(message);
+                    aryaInput.value = '';
+                }
+            }
+        });
+
+        function startAryaListening() {
+            if ('webkitSpeechRecognition' in window) {
+                aryaRecognition = new webkitSpeechRecognition();
+                aryaRecognition.continuous = false;
+                aryaRecognition.interimResults = false;
+                aryaRecognition.lang = currentLanguage === 'kannada' ? 'kn-IN' : 'en-IN';
+                
+                aryaRecognition.onstart = () => {
+                    isAryaListening = true;
+                    aryaMicBtn.classList.add('recording');
+                    aryaMicBtn.innerHTML = '🎤';
+                };
+                
+                aryaRecognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    processUserMessage(transcript);
+                };
+                
+                aryaRecognition.onerror = () => {
+                    aryaMicBtn.classList.remove('recording');
+                    aryaMicBtn.innerHTML = '🎤';
+                    isAryaListening = false;
+                    addAryaMessage(currentLanguage === 'kannada' ? "ಕ್ಷಮಿಸಿ, ಕೇಳಿಸಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ." : "Sorry, I didn't hear you. Please try again.", false);
+                };
+                
+                aryaRecognition.onend = () => {
+                    aryaMicBtn.classList.remove('recording');
+                    aryaMicBtn.innerHTML = '🎤';
+                    isAryaListening = false;
+                };
+                
+                aryaRecognition.start();
+            } else {
+                addAryaMessage(currentLanguage === 'kannada' ? "ಧ್ವನಿ ಇನ್ಪುಟ್ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ. ಕ್ರೋಮ್ ಬ್ರೌಸರ್ ಬಳಸಿ." : "Voice input not supported. Please use Chrome browser.", false);
+            }
+        }
+
+        aryaMicBtn.addEventListener('click', () => {
+            if (isAryaListening) {
+                if (aryaRecognition) aryaRecognition.stop();
+            } else {
+                startAryaListening();
+            }
+        });
+
         // ========== EVENT LISTENERS ==========
         document.addEventListener('DOMContentLoaded', () => {
-            // Navigation
             document.querySelectorAll('.nav-item').forEach(nav => {
                 nav.addEventListener('click', () => switchPage(nav.getAttribute('data-page')));
             });
-            
-            // Buttons
             document.getElementById('getRecommendationsBtn').addEventListener('click', getRecommendations);
             document.getElementById('analyzeSoilBtn').addEventListener('click', analyzeSoil);
             document.getElementById('clearReportsBtn').addEventListener('click', clearReports);
-            
-            // Language selectors
             document.getElementById('engLangOption').addEventListener('click', () => setLanguage('english'));
             document.getElementById('kanLangOption').addEventListener('click', () => setLanguage('kannada'));
             document.getElementById('engLangBtn').addEventListener('click', () => setLanguage('english'));
@@ -1287,16 +1658,10 @@
             document.getElementById('soilKanLangBtn').addEventListener('click', () => setSoilLanguage('kannada'));
             document.getElementById('schemesEngLangBtn').addEventListener('click', () => setSchemesLanguage('english'));
             document.getElementById('schemesKanLangBtn').addEventListener('click', () => setSchemesLanguage('kannada'));
-            
-            // Soil upload
             document.getElementById('uploadArea').addEventListener('click', () => document.getElementById('soilImage').click());
             document.getElementById('soilImage').addEventListener('change', (e) => previewImage(e.target));
-            
-            // Initial renders
             renderSkills('skillsGrid', selectedSkills, toggleSkill, 'english');
             renderSkills('soilSkillsGrid', selectedSoilSkills, toggleSoilSkill, 'english');
-            
-            // Load data
             loadSchemes();
             loadSkills();
             loadReports();
