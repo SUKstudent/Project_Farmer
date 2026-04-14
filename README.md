@@ -1,13 +1,13 @@
-🌾 Sahayak AI
+#🌾 Sahayak AI
 ----
 
-♻️ Climate-Resilient Livelihood Planner
+##♻️ Climate-Resilient Livelihood Planner
 
 A full-stack web application that helps farmers in drought-prone regions of North Karnataka diversify income sources, reduce climate risks, and achieve higher income stability using AI-powered recommendations.
 
 ----
 
-🚀 Project Overview
+##🚀 Project Overview
 
 Sahayak AI enables farmers to create personalized livelihood plans by analyzing their land, water availability, budget, and family skills.
 
@@ -15,7 +15,7 @@ It integrates agriculture, livestock, and non-farm income sources to reduce depe
 
 ----
 
-📊 Input Features
+##📊 Input Features
 
 Farmers provide the following details:
 
@@ -31,7 +31,7 @@ Farmers provide the following details:
 
 ----
 
-🎯 Output
+##🎯 Output
 
 🌱 Recommended crops (based on soil & water)
 
@@ -45,7 +45,7 @@ Farmers provide the following details:
 
 ----
 
-🌟 Key Features
+##🌟 Key Features
 
 📋 Personalized AI recommendations
 
@@ -60,7 +60,7 @@ Farmers provide the following details:
 🔓 No login required
 
 ----
-📊 Impact
+##📊 Impact
 
 📈 Income stability: 40% → 95%
 
@@ -73,35 +73,58 @@ Farmers provide the following details:
 💧 Water dependency reduced significantly
 
 ----
-🛠 Technologies Used
+##🛠 Technologies Used
 
 1)Python / Node.js
+
 2)FastAPI / Express
+
 3)HTML, CSS, JavaScript
+
 4)Streamlit (optional prototype)
+
 5)Pillow / Sharp (image processing)
+
 6)Web Speech API
 
 ----
 
-📱 How It Works
+##📱 How It Works
 
 Enter farmer details
+
 (Optional) Upload soil image
+
 Click Get Recommendations
+
 View complete livelihood plan
+
 🌱 Soil Analysis
+
 📸 Upload soil image
+
 🤖 AI predicts soil type:
+
 1)Red
+
 2)Black
+
 3)Laterite
+
 4)Alluvial
-🌾 Suggests suitable crops
+
+----
+
+##🌾 Suggests suitable crops
+
 🏦 Government Schemes
+
 1)PMEGP
+
 2)NABARD SHG
+
 3)KVIC
+
 4)MGNREGA
 
 Includes subsidy, eligibility, and application details.
