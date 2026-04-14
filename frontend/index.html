@@ -392,7 +392,7 @@
         /* Cards Container */
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
         }
 
@@ -1008,14 +1008,16 @@
                     <div class="message-bubble">
                         Namaste! I am Agent Arya, your farming assistant.<br><br>
                         I can help you with:<br>
-                        • 📋 Farmer Details<br>
-                        • 📸 Soil Analysis<br>
-                        • 👩‍🎨 Family Skills<br>
-                        • 🏦 Government Schemes<br><br>
+                        • 🌽 Crops<br>
+                        • 🐐 Livestock<br>
+                        • 👩‍🎨 Family Skills (17+ traditional skills)<br>
+                        • 🏦 Government Schemes<br>
+                        • 📸 Soil Analysis<br><br>
                         <strong>Try asking me:</strong><br>
-                        "Which crops for low water?"<br>
-                        "Tell me about Bidri work"<br>
-                        "What subsidies are available?"
+                        "Tell me about Lambani embroidery"<br>
+                        "Ilkal saree weaving details"<br>
+                        "Byadgi chilli products"<br>
+                        "Jowar based food products"
                     </div>
                 </div>
             </div>
@@ -1124,7 +1126,32 @@
             }
         };
 
+        // ========== EXPANDED SKILLS LIST - 17+ TRADITIONAL SKILLS ==========
         const SKILLS_LIST = [
+            // Handicrafts & Embroidery
+            { id: "lambani", name: "Lambani (Banjara) Embroidery", kn: "ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ", setup: 2000, monthly: 4000, training: "Lambani Craft Center, Hampi", water: "Zero" },
+            { id: "kaudi", name: "Kaudi Patchwork (Traditional Quilt)", kn: "ಕೌಡಿ ಪ್ಯಾಚ್ವರ್ಕ್", setup: 3000, monthly: 5000, training: "SHG Hubli-Dharwad", water: "Zero" },
+            { id: "ilkal", name: "Ilkal Saree Weaving", kn: "ಇಳಕಲ್ ಸೀರೆ ನೇಯ್ಗೆ", setup: 15000, monthly: 10000, training: "Ilkal Handloom Center, Bagalkot", water: "Low" },
+            { id: "rangoli", name: "Rangoli (Festival Art)", kn: "ರಂಗೋಲಿ", setup: 1000, monthly: 3000, training: "Local Artisans", water: "Zero" },
+            
+            // Basket & Rope Making
+            { id: "bamboo", name: "Bamboo/Grass Basket Making", kn: "ಬಿದಿರು/ಹುಲ್ಲು ಬುಟ್ಟಿ ತಯಾರಿಕೆ", setup: 2000, monthly: 4000, training: "KVIC Hubli", water: "Zero" },
+            { id: "rope", name: "Jute/Natural Fiber Rope Making", kn: "ಸೆಣಬು/ನಾರಿನ ಹಗ್ಗ ತಯಾರಿಕೆ", setup: 3000, monthly: 5000, training: "KRISHI Jyoti Dharwad", water: "Zero" },
+            
+            // Jewelry & Bags
+            { id: "bead", name: "Bead & Tribal Jewelry Making", kn: "ಮಣಿ ಮತ್ತು ಬುಡಕಟ್ಟು ಆಭರಣ", setup: 2500, monthly: 4500, training: "KVIC Bidar", water: "Zero" },
+            { id: "clothbag", name: "Cloth Bag Stitching (Reusable)", kn: "ಬಟ್ಟೆ ಚೀಲ ಹೊಲಿಗೆ", setup: 2000, monthly: 5000, training: "NABARD SHG", water: "Low" },
+            { id: "leafplate", name: "Areca Leaf Plate Making", kn: "ಅಡಿಕೆ ಎಲೆ ತಟ್ಟೆ ತಯಾರಿಕೆ", setup: 5000, monthly: 8000, training: "KVIC", water: "Low" },
+            
+            // Food Products
+            { id: "papad", name: "Papad Making", kn: "ಪಾಪಡ್ ತಯಾರಿಕೆ", setup: 3000, monthly: 7000, training: "NABARD SHG", water: "Low" },
+            { id: "spice", name: "Spice Powder Making (Byadgi Chilli)", kn: "ಮಸಾಲೆ ಪುಡಿ ತಯಾರಿಕೆ (ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ)", setup: 8000, monthly: 12000, training: "Spice Board, Haveri", water: "Low" },
+            { id: "jowar", name: "Jowar-based Food Products", kn: "ಜೋಳದ ಆಹಾರ ಉತ್ಪನ್ನಗಳು", setup: 10000, monthly: 15000, training: "Food Processing Unit, Dharwad", water: "Moderate" },
+            { id: "groundnut", name: "Groundnut Products (Chikki, Oil)", kn: "ಕಡಲೆಕಾಯಿ ಉತ್ಪನ್ನಗಳು (ಚಿಕ್ಕಿ, ಎಣ್ಣೆ)", setup: 15000, monthly: 12000, training: "NABARD Food Park", water: "Moderate" },
+            { id: "dairy", name: "Dairy Products (Ghee, Curd, Butter)", kn: "ಹೈನು ಉತ್ಪನ್ನಗಳು (ತುಪ್ಪ, ಮೊಸರು, ಬೆಣ್ಣೆ)", setup: 20000, monthly: 15000, training: "KMF Dairy Training Center", water: "Moderate" },
+            { id: "millet", name: "Millet-based Food Processing", kn: "ಸಿರಿಧಾನ್ಯ ಆಹಾರ ಸಂಸ್ಕರಣೆ", setup: 12000, monthly: 13000, training: "Millet Mission, Karnataka", water: "Low" },
+            
+            // Traditional Skills (continued)
             { id: "bidri", name: "Bidri Work", kn: "ಬಿದ್ರಿ ಕೆಲಸ", setup: 5000, monthly: 5000, training: "KVIC Bidar", water: "Zero" },
             { id: "kasuti", name: "Kasuti Embroidery", kn: "ಕಸೂತಿ", setup: 1000, monthly: 3000, training: "KRISHI Jyoti Dharwad", water: "Zero" },
             { id: "diya", name: "Diya Making", kn: "ದೀಪ ಮಾಡುವುದು", setup: 3000, monthly: 8000, training: "KVIC Hubli", water: "Zero" },
@@ -1537,14 +1564,13 @@
             if (indicator) indicator.remove();
         }
 
-        // Speak with female voice in Kannada or English
+        // FEMALE VOICE FOR BOTH KANNADA AND ENGLISH
         function speakWithFemaleVoice(text, language) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 
                 const utterance = new SpeechSynthesisUtterance(text);
                 
-                // Set language
                 if (language === 'kannada') {
                     utterance.lang = 'kn-IN';
                 } else {
@@ -1552,26 +1578,30 @@
                 }
                 
                 utterance.rate = 0.9;
-                utterance.pitch = 1.2;  // Higher pitch = more feminine
+                utterance.pitch = 1.3;
                 utterance.volume = 1;
                 
-                // Try to select a female voice
                 const setFemaleVoice = () => {
                     const voices = window.speechSynthesis.getVoices();
                     
                     if (language === 'kannada') {
-                        // Look for Kannada female voice
-                        const kannadaFemale = voices.find(voice => 
-                            voice.lang.includes('kn') && (voice.name.includes('Female') || voice.name.includes('Girl') || voice.name.includes('Samantha'))
+                        const kannadaFemale = voices.find(v => 
+                            v.lang.includes('kn') && (v.name.includes('Female') || v.name.includes('Girl') || v.name.includes('Samantha'))
                         );
                         if (kannadaFemale) utterance.voice = kannadaFemale;
                     } else {
-                        // Look for Indian English female voice
-                        const englishFemale = voices.find(voice => 
-                            (voice.lang.includes('en-IN') || voice.lang.includes('en-GB')) && 
-                            (voice.name.includes('Female') || voice.name.includes('Girl') || voice.name.includes('Samantha') || voice.name.includes('Google UK Female'))
+                        const englishFemale = voices.find(v => 
+                            (v.lang.includes('en-IN') || v.lang.includes('en-GB')) && 
+                            (v.name.includes('Female') || v.name.includes('Girl') || v.name.includes('Samantha') || v.name.includes('Google UK Female'))
                         );
                         if (englishFemale) utterance.voice = englishFemale;
+                        
+                        if (!englishFemale) {
+                            const anyFemale = voices.find(v => 
+                                v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Google UK Female')
+                            );
+                            if (anyFemale) utterance.voice = anyFemale;
+                        }
                     }
                 };
                 
@@ -1592,40 +1622,157 @@
             const lowerMsg = message.toLowerCase();
             let response = '';
             
-            if (lowerMsg.includes('crop') || lowerMsg.includes('ಬೆಳೆ')) {
+            // ========== CROPS ==========
+            if (lowerMsg.includes('crop') || lowerMsg.includes('ಬೆಳೆ') || lowerMsg.includes('jowar') || lowerMsg.includes('ragi') || lowerMsg.includes('cotton') || lowerMsg.includes('maize') || lowerMsg.includes('sugarcane')) {
                 response = currentLanguage === 'kannada' 
-                    ? "ಕಡಿಮೆ ನೀರಿಗೆ ಜೋಳ, ರಾಗಿ, ತೊಗರಿಬೇಳೆ ಉತ್ತಮ. ಮಧ್ಯಮ ನೀರಿಗೆ ಹತ್ತಿ, ಮೆಕ್ಕೆಜೋಳ. ಹೆಚ್ಚು ನೀರಿಗೆ ಕಬ್ಬು, ದಾಳಿಂಬೆ ಸೂಕ್ತ."
-                    : "For low water, Jowar, Ragi, and Tur Dal are good. For moderate water, Cotton and Maize. For high water, Sugarcane and Pomegranate.";
+                    ? "🌾 ಕಡಿಮೆ ನೀರಿಗೆ: ಜೋಳ, ರಾಗಿ, ತೊಗರಿಬೇಳೆ, ಕಡಲೆಕಾಯಿ (ಲಾಭ: ₹15,000-₹22,000/ಎಕರೆ). ಮಧ್ಯಮ ನೀರಿಗೆ: ಹತ್ತಿ, ಮೆಕ್ಕೆಜೋಳ, ಮೆಣಸಿನಕಾಯಿ, ಸೂರ್ಯಕಾಂತಿ (ಲಾಭ: ₹25,000-₹40,000/ಎಕರೆ). ಹೆಚ್ಚು ನೀರಿಗೆ: ಕಬ್ಬು, ದಾಳಿಂಬೆ, ಬಾಳೆ (ಲಾಭ: ₹80,000-₹1,20,000/ಎಕರೆ)."
+                    : "🌾 For low water: Jowar, Ragi, Tur Dal, Groundnut (Profit: ₹15,000-₹22,000/acre). For moderate water: Cotton, Maize, Chili, Sunflower (Profit: ₹25,000-₹40,000/acre). For high water: Sugarcane, Pomegranate, Banana (Profit: ₹80,000-₹1,20,000/acre).";
             }
-            else if (lowerMsg.includes('bidri') || lowerMsg.includes('ಬಿದ್ರಿ')) {
-                response = currentLanguage === 'kannada'
-                    ? "ಬಿದ್ರಿ ಕೆಲಸ ಬೀದರ್ನ ಪ್ರಸಿದ್ಧ ಕಲೆ. ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ಕೆವಿಐಸಿ ಬೀದರ್ನಲ್ಲಿ ಉಚಿತ ತರಬೇತಿ."
-                    : "Bidri work is a famous art from Bidar. Setup cost ₹5,000, monthly income ₹5,000. Free training at KVIC Bidar.";
-            }
-            else if (lowerMsg.includes('subsidy') || lowerMsg.includes('ಸಬ್ಸಿಡಿ') || lowerMsg.includes('scheme')) {
-                response = currentLanguage === 'kannada'
-                    ? "PMEGP 35% ಸಬ್ಸಿಡಿ, KVIC 40% ಸಬ್ಸಿಡಿ, NABARD ಸಾಲ ಸೌಲಭ್ಯ. MGNREGA 100% ಸಬ್ಸಿಡಿ ನೀಡುತ್ತದೆ."
-                    : "PMEGP gives 35% subsidy, KVIC gives 40% for handicrafts, NABARD provides loans, MGNREGA gives 100% subsidy.";
-            }
+            
+            // ========== LIVESTOCK ==========
             else if (lowerMsg.includes('goat') || lowerMsg.includes('ಮೇಕೆ')) {
                 response = currentLanguage === 'kannada'
-                    ? "ಮೇಕೆ ಸಾಕಣೆ ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. ಕಡಿಮೆ ನೀರು ಬೇಕು. NABARD ಸಾಲ ಸೌಲಭ್ಯವಿದೆ."
-                    : "Goat rearing costs ₹15,000, monthly income ₹4,000. Needs low water. NABARD loans available.";
+                    ? "🐐 ಮೇಕೆ ಸಾಕಣೆ: 5 ಮೇಕೆಗಳಿಗೆ ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. ಕಡಿಮೆ ನೀರು ಬೇಕು. ತರಬೇತಿ: ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರ. ಸಾಲ ಸೌಲಭ್ಯ: NABARD."
+                    : "🐐 Goat rearing: 5 goats cost ₹15,000, monthly income ₹4,000. Needs low water. Training: KVK centers. Loans: NABARD.";
             }
+            else if (lowerMsg.includes('bee') || lowerMsg.includes('ಜೇನು') || lowerMsg.includes('honey')) {
+                response = currentLanguage === 'kannada'
+                    ? "🍯 ಜೇನು ಸಾಕಣೆ: 5 ಪೆಟ್ಟಿಗೆಗಳಿಗೆ ವೆಚ್ಚ ₹12,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ತರಬೇತಿ: KVIC ಹುಬ್ಬಳ್ಳಿ. ಸಬ್ಸಿಡಿ: 40% ಕೆವಿಐಸಿ."
+                    : "🍯 Beekeeping: 5 boxes cost ₹12,000, monthly income ₹5,000. Training: KVIC Hubli. Subsidy: 40% KVIC.";
+            }
+            else if (lowerMsg.includes('poultry') || lowerMsg.includes('ಕೋಳಿ') || lowerMsg.includes('chicken')) {
+                response = currentLanguage === 'kannada'
+                    ? "🐔 ಕೋಳಿ ಸಾಕಣೆ: 20 ಕೋಳಿಗಳಿಗೆ ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹3,000. ಕಡಿಮೆ ನೀರು ಬೇಕು. PMEGP ಸಬ್ಸಿಡಿ 35% ಲಭ್ಯ."
+                    : "🐔 Poultry farming: 20 birds cost ₹5,000, monthly income ₹3,000. Needs low water. PMEGP subsidy 35% available.";
+            }
+            else if (lowerMsg.includes('dairy') || lowerMsg.includes('ಹೈನು') || lowerMsg.includes('cow')) {
+                response = currentLanguage === 'kannada'
+                    ? "🐄 ಹೈನುಗಾರಿಕೆ: 2 ಹಸುಗಳಿಗೆ ವೆಚ್ಚ ₹70,000, ಮಾಸಿಕ ಆದಾಯ ₹10,000. ಮಧ್ಯಮ ನೀರು ಬೇಕು. NABARD ಸಾಲ ಸೌಲಭ್ಯ."
+                    : "🐄 Dairy farming: 2 cows cost ₹70,000, monthly income ₹10,000. Needs moderate water. NABARD loans available.";
+            }
+            else if (lowerMsg.includes('fish') || lowerMsg.includes('ಮೀನು') || lowerMsg.includes('fishery')) {
+                response = currentLanguage === 'kannada'
+                    ? "🐟 ಮತ್ಸ್ಯಕೃಷಿ: 0.5 ಎಕರೆ ಕೆರೆಗೆ ವೆಚ್ಚ ₹50,000, ಮಾಸಿಕ ಆದಾಯ ₹8,000. PMMSY ಯೋಜನೆಯಡಿ ಸಬ್ಸಿಡಿ ಲಭ್ಯ."
+                    : "🐟 Inland fisheries: 0.5 acre pond cost ₹50,000, monthly income ₹8,000. Subsidy available under PMMSY scheme.";
+            }
+            
+            // ========== FAMILY SKILLS (New additions) ==========
+            else if (lowerMsg.includes('lambani') || lowerMsg.includes('ಲಂಬಾಣಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🎨 ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ: ಹಂಪಿ ಪ್ರದೇಶದ ಪ್ರಸಿದ್ಧ ಕಲೆ. ವೆಚ್ಚ ₹2,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. ತರಬೇತಿ: ಲಂಬಾಣಿ ಕ್ರಾಫ್ಟ್ ಸೆಂಟರ್, ಹಂಪಿ. ನೀರಿನ ಅಗತ್ಯವಿಲ್ಲ."
+                    : "🎨 Lambani embroidery: Famous art from Hampi region. Setup cost ₹2,000, monthly income ₹4,000. Training: Lambani Craft Center, Hampi. Zero water required.";
+            }
+            else if (lowerMsg.includes('ilkal') || lowerMsg.includes('ಇಳಕಲ್')) {
+                response = currentLanguage === 'kannada'
+                    ? "👘 ಇಳಕಲ್ ಸೀರೆ ನೇಯ್ಗೆ: ಬಾಗಲಕೋಟೆ ಜಿಲ್ಲೆಯ GI ಟ್ಯಾಗ್ ಉತ್ಪನ್ನ. ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹10,000. ತರಬೇತಿ: ಇಳಕಲ್ ಹ್ಯಾಂಡ್ಲೂಮ್ ಸೆಂಟರ್."
+                    : "👘 Ilkal saree weaving: GI-tagged product from Bagalkot district. Setup cost ₹15,000, monthly income ₹10,000. Training: Ilkal Handloom Center.";
+            }
+            else if (lowerMsg.includes('byadgi') || lowerMsg.includes('ಬ್ಯಾಡಗಿ') || lowerMsg.includes('spice')) {
+                response = currentLanguage === 'kannada'
+                    ? "🌶️ ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ ಮಸಾಲೆ ಪುಡಿ: ಹಾವೇರಿ ಜಿಲ್ಲೆಯ ಪ್ರಸಿದ್ಧ ಉತ್ಪನ್ನ. ವೆಚ್ಚ ₹8,000, ಮಾಸಿಕ ಆದಾಯ ₹12,000. ತರಬೇತಿ: ಸ್ಪೈಸ್ ಬೋರ್ಡ್, ಹಾವೇರಿ."
+                    : "🌶️ Byadgi chilli spice powder: Famous product from Haveri district. Setup cost ₹8,000, monthly income ₹12,000. Training: Spice Board, Haveri.";
+            }
+            else if (lowerMsg.includes('jowar product') || lowerMsg.includes('ಜೋಳದ ಉತ್ಪನ್ನ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🍞 ಜೋಳದ ಆಹಾರ ಉತ್ಪನ್ನಗಳು: ರೊಟ್ಟಿ ಹಿಟ್ಟು, ಸ್ನ್ಯಾಕ್ಸ್. ವೆಚ್ಚ ₹10,000, ಮಾಸಿಕ ಆದಾಯ ₹15,000. ತರಬೇತಿ: ಫುಡ್ ಪ್ರಾಸೆಸಿಂಗ್ ಯುನಿಟ್, ಧಾರವಾಡ."
+                    : "🍞 Jowar-based food products: Rotti flour, snacks. Setup cost ₹10,000, monthly income ₹15,000. Training: Food Processing Unit, Dharwad.";
+            }
+            else if (lowerMsg.includes('groundnut product') || lowerMsg.includes('ಕಡಲೆಕಾಯಿ ಉತ್ಪನ್ನ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🥜 ಕಡಲೆಕಾಯಿ ಉತ್ಪನ್ನಗಳು: ಚಿಕ್ಕಿ, ಎಣ್ಣೆ. ವೆಚ್ಚ ₹15,000, ಮಾಸಿಕ ಆದಾಯ ₹12,000. ತರಬೇತಿ: NABARD ಫುಡ್ ಪಾರ್ಕ್."
+                    : "🥜 Groundnut products: Chikki, oil. Setup cost ₹15,000, monthly income ₹12,000. Training: NABARD Food Park.";
+            }
+            else if (lowerMsg.includes('millet') || lowerMsg.includes('ಸಿರಿಧಾನ್ಯ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🌾 ಸಿರಿಧಾನ್ಯ ಆಹಾರ ಸಂಸ್ಕರಣೆ: ರಾಗಿ, ಬಜ್ರಾ ಉತ್ಪನ್ನಗಳು. ವೆಚ್ಚ ₹12,000, ಮಾಸಿಕ ಆದಾಯ ₹13,000. ತರಬೇತಿ: ಮಿಲ್ಲೆಟ್ ಮಿಷನ್, ಕರ್ನಾಟಕ."
+                    : "🌾 Millet-based food processing: Ragi, bajra products. Setup cost ₹12,000, monthly income ₹13,000. Training: Millet Mission, Karnataka.";
+            }
+            else if (lowerMsg.includes('kaudi') || lowerMsg.includes('ಕೌಡಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🛏️ ಕೌಡಿ ಪ್ಯಾಚ್ವರ್ಕ್: ಸಾಂಪ್ರದಾಯಿಕ ಕ್ವಿಲ್ಟ್ ತಯಾರಿಕೆ. ವೆಚ್ಚ ₹3,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ತರಬೇತಿ: SHG ಹುಬ್ಬಳ್ಳಿ-ಧಾರವಾಡ."
+                    : "🛏️ Kaudi patchwork: Traditional quilt making. Setup cost ₹3,000, monthly income ₹5,000. Training: SHG Hubli-Dharwad.";
+            }
+            else if (lowerMsg.includes('bamboo') || lowerMsg.includes('ಬಿದಿರು')) {
+                response = currentLanguage === 'kannada'
+                    ? "🧺 ಬಿದಿರು/ಹುಲ್ಲು ಬುಟ್ಟಿ ತಯಾರಿಕೆ: ವೆಚ್ಚ ₹2,000, ಮಾಸಿಕ ಆದಾಯ ₹4,000. ತರಬೇತಿ: KVIC ಹುಬ್ಬಳ್ಳಿ. ನೀರಿನ ಅಗತ್ಯವಿಲ್ಲ."
+                    : "🧺 Bamboo/grass basket making: Setup cost ₹2,000, monthly income ₹4,000. Training: KVIC Hubli. Zero water required.";
+            }
+            else if (lowerMsg.includes('leaf plate') || lowerMsg.includes('ಎಲೆ ತಟ್ಟೆ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🍃 ಅಡಿಕೆ ಎಲೆ ತಟ್ಟೆ ತಯಾರಿಕೆ: ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹8,000. ತರಬೇತಿ: KVIC. ಪರಿಸರ ಸ್ನೇಹಿ ಉತ್ಪನ್ನ."
+                    : "🍃 Areca leaf plate making: Setup cost ₹5,000, monthly income ₹8,000. Training: KVIC. Eco-friendly product.";
+            }
+            else if (lowerMsg.includes('cloth bag') || lowerMsg.includes('ಬಟ್ಟೆ ಚೀಲ')) {
+                response = currentLanguage === 'kannada'
+                    ? "👜 ಬಟ್ಟೆ ಚೀಲ ಹೊಲಿಗೆ: ಮರುಬಳಕೆ ಚೀಲಗಳು. ವೆಚ್ಚ ₹2,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ತರಬೇತಿ: NABARD SHG."
+                    : "👜 Cloth bag stitching: Reusable bags. Setup cost ₹2,000, monthly income ₹5,000. Training: NABARD SHG.";
+            }
+            else if (lowerMsg.includes('bead') || lowerMsg.includes('ಮಣಿ') || lowerMsg.includes('jewelry')) {
+                response = currentLanguage === 'kannada'
+                    ? "💎 ಮಣಿ ಮತ್ತು ಬುಡಕಟ್ಟು ಆಭರಣ: ವೆಚ್ಚ ₹2,500, ಮಾಸಿಕ ಆದಾಯ ₹4,500. ತರಬೇತಿ: KVIC ಬೀದರ್."
+                    : "💎 Bead and tribal jewelry making: Setup cost ₹2,500, monthly income ₹4,500. Training: KVIC Bidar.";
+            }
+            else if (lowerMsg.includes('rangoli') || lowerMsg.includes('ರಂಗೋಲಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🎨 ರಂಗೋಲಿ: ಹಬ್ಬಗಳ ಸಮಯದಲ್ಲಿ ಬೇಡಿಕೆ. ವೆಚ್ಚ ₹1,000, ಮಾಸಿಕ ಆದಾಯ ₹3,000. ತರಬೇತಿ: ಸ್ಥಳೀಯ ಕಲಾವಿದರು."
+                    : "🎨 Rangoli: High demand during festivals. Setup cost ₹1,000, monthly income ₹3,000. Training: Local artisans.";
+            }
+            
+            // ========== BIDRI & OTHER SKILLS ==========
+            else if (lowerMsg.includes('bidri') || lowerMsg.includes('ಬಿದ್ರಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🎨 ಬಿದ್ರಿ ಕೆಲಸ: ಬೀದರ್ನ ಪ್ರಸಿದ್ಧ ಕಲೆ. ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹5,000. ತರಬೇತಿ: ಕೆವಿಐಸಿ ಬೀದರ್. ಸಬ್ಸಿಡಿ: 40%."
+                    : "🎨 Bidri work: Famous art from Bidar. Setup cost ₹5,000, monthly income ₹5,000. Training: KVIC Bidar. Subsidy: 40%.";
+            }
+            else if (lowerMsg.includes('kasuti') || lowerMsg.includes('ಕಸೂತಿ') || lowerMsg.includes('embroidery')) {
+                response = currentLanguage === 'kannada'
+                    ? "🪡 ಕಸೂತಿ ಎಂಬ್ರಾಯ್ಡರಿ: ವೆಚ್ಚ ₹1,000, ಮಾಸಿಕ ಆದಾಯ ₹3,000. ತರಬೇತಿ: ಕೃಷಿ ಜ್ಯೋತಿ ಧಾರವಾಡ. ಸ್ವಸಹಾಯ ಗುಂಪು ಸೌಲಭ್ಯ."
+                    : "🪡 Kasuti embroidery: Setup cost ₹1,000, monthly income ₹3,000. Training: KRISHI Jyoti Dharwad. SHG facility available.";
+            }
+            else if (lowerMsg.includes('diya') || lowerMsg.includes('ದೀಪ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🪔 ದೀಪ ತಯಾರಿಕೆ: ವೆಚ್ಚ ₹3,000, ಮಾಸಿಕ ಆದಾಯ ₹8,000. ತರಬೇತಿ: ಕೆವಿಐಸಿ ಹುಬ್ಬಳ್ಳಿ. ನೀರಿನ ಅಗತ್ಯವಿಲ್ಲ."
+                    : "🪔 Diya making: Setup cost ₹3,000, monthly income ₹8,000. Training: KVIC Hubli. Zero water required.";
+            }
+            else if (lowerMsg.includes('pickle') || lowerMsg.includes('ಉಪ್ಪಿನಕಾಯಿ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🥒 ಉಪ್ಪಿನಕಾಯಿ ತಯಾರಿಕೆ: ವೆಚ್ಚ ₹5,000, ಮಾಸಿಕ ಆದಾಯ ₹12,000. ತರಬೇತಿ: NABARD ಸ್ವಸಹಾಯ ಗುಂಪು. ಕಡಿಮೆ ನೀರು ಬೇಕು."
+                    : "🥒 Pickle making: Setup cost ₹5,000, monthly income ₹12,000. Training: NABARD SHG. Needs low water.";
+            }
+            
+            // ========== GOVERNMENT SCHEMES ==========
+            else if (lowerMsg.includes('pmegp') || lowerMsg.includes('subsidy') || lowerMsg.includes('ಸಬ್ಸಿಡಿ') || lowerMsg.includes('scheme')) {
+                response = currentLanguage === 'kannada'
+                    ? "🏦 ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು:\n• PMEGP: 35% ಸಬ್ಸಿಡಿ, ಗರಿಷ್ಠ ಸಾಲ ₹1,00,000, ಬಡ್ಡಿ 2%\n• KVIC: 40% ಸಬ್ಸಿಡಿ, ಗರಿಷ್ಠ ಸಾಲ ₹75,000\n• NABARD: 7% ಬಡ್ಡಿಯಲ್ಲಿ ಸಾಲ, ಗರಿಷ್ಠ ₹50,000\n• MGNREGA: 100% ಸಬ್ಸಿಡಿ, ಕೆರೆ ಅಗೆಯಲು ₹35,000"
+                    : "🏦 Government Schemes:\n• PMEGP: 35% subsidy, max loan ₹1,00,000, interest 2%\n• KVIC: 40% subsidy, max loan ₹75,000\n• NABARD: Loans at 7%, max ₹50,000\n• MGNREGA: 100% subsidy, ₹35,000 for farm pond";
+            }
+            
+            // ========== SOIL ==========
             else if (lowerMsg.includes('soil') || lowerMsg.includes('ಮಣ್ಣು')) {
                 response = currentLanguage === 'kannada'
-                    ? "ಮಣ್ಣಿನ ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ. AI ಮಣ್ಣಿನ ಪ್ರಕಾರ ಪತ್ತೆ ಮಾಡಿ ಸೂಕ್ತ ಬೆಳೆಗಳನ್ನು ಶಿಫಾರಸು ಮಾಡುತ್ತದೆ."
-                    : "Upload a soil photo. AI will detect soil type and recommend suitable crops.";
+                    ? "🌱 ಮಣ್ಣಿನ ವಿಧಗಳು:\n• ಕೆಂಪು ಮಣ್ಣು - ಕಡಿಮೆ ನೀರು - ಜೋಳ, ರಾಗಿ, ಕಡಲೆಕಾಯಿ\n• ಕಪ್ಪು ಮಣ್ಣು - ಹೆಚ್ಚು ನೀರು - ಹತ್ತಿ, ಮೆಣಸಿನಕಾಯಿ\n• ಮೆಕ್ಕಲು ಮಣ್ಣು - ಮಧ್ಯಮ ನೀರು - ದ್ವಿದಳ ಧಾನ್ಯಗಳು\n• ಲ್ಯಾಟರೈಟ್ - ಮಧ್ಯಮ ನೀರು - ಗೋಡಂಬಿ, ಅಡಿಕೆ"
+                    : "🌱 Soil types:\n• Red soil - Low water - Jowar, Ragi, Groundnut\n• Black soil - High water - Cotton, Chili\n• Alluvial soil - Moderate water - Pulses, Sunflower\n• Laterite soil - Moderate water - Cashew, Arecanut";
             }
+            
+            // ========== GREETING ==========
             else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('ನಮಸ್ಕಾರ')) {
                 response = currentLanguage === 'kannada'
-                    ? "ನಮಸ್ಕಾರ! ನಾನು ಆರ್ಯ, ನಿಮ್ಮ ಕೃಷಿ ಸಹಾಯಕ. ನಾನು ಬೆಳೆ, ಜಾನುವಾರು, ಬಿದ್ರಿ ಕೆಲಸ, ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಬಗ್ಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ."
-                    : "Hello! I am Arya, your farming assistant. I can help with crops, livestock, Bidri work, and government schemes.";
+                    ? "ನಮಸ್ಕಾರ! ನಾನು ಆರ್ಯ, ನಿಮ್ಮ ಕೃಷಿ ಸಹಾಯಕ. ನಾನು ಬೆಳೆ, ಜಾನುವಾರು, ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ, ಇಳಕಲ್ ಸೀರೆ, ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ, ಬಿದ್ರಿ ಕೆಲಸ, ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಬಗ್ಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪ್ರಶ್ನೆ ಕೇಳಿ."
+                    : "Hello! I am Arya, your farming assistant. I can help with crops, livestock, Lambani embroidery, Ilkal saree, Byadgi chilli, Bidri work, and government schemes. Please ask your question.";
             }
+            
+            // ========== HELP ==========
+            else if (lowerMsg.includes('help') || lowerMsg.includes('ಸಹಾಯ')) {
+                response = currentLanguage === 'kannada'
+                    ? "🤖 ನಾನು ಸಹಾಯ ಮಾಡಬಲ್ಲ ವಿಷಯಗಳು:\n\n🌾 ಬೆಳೆಗಳು - 'ಕಡಿಮೆ ನೀರಿಗೆ ಯಾವ ಬೆಳೆ?'\n🐐 ಜಾನುವಾರು - 'ಮೇಕೆ ಸಾಕಣೆ ಬಗ್ಗೆ ಹೇಳಿ'\n👩‍🎨 ಕೌಶಲ್ಯಗಳು - 'ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ', 'ಇಳಕಲ್ ಸೀರೆ', 'ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ', 'ಬಿದ್ರಿ ಕೆಲಸ'\n🏦 ಯೋಜನೆಗಳು - 'ಸಬ್ಸಿಡಿ ಬಗ್ಗೆ ಹೇಳಿ'\n📸 ಮಣ್ಣು - 'ಮಣ್ಣಿನ ಪ್ರಕಾರಗಳ ಬಗ್ಗೆ ಹೇಳಿ'"
+                    : "🤖 I can help with:\n\n🌾 Crops - 'Which crops for low water?'\n🐐 Livestock - 'Tell me about goat rearing'\n👩‍🎨 Skills - 'Lambani embroidery', 'Ilkal saree', 'Byadgi chilli', 'Bidri work'\n🏦 Schemes - 'Tell me about subsidies'\n📸 Soil - 'Tell me about soil types'";
+            }
+            
+            // ========== DEFAULT ==========
             else {
                 response = currentLanguage === 'kannada'
-                    ? "ಕ್ಷಮಿಸಿ, ನಾನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಬೆಳೆ, ಬಿದ್ರಿ, ಸಬ್ಸಿಡಿ, ಅಥವಾ ಮಣ್ಣಿನ ಬಗ್ಗೆ ಕೇಳಿ."
-                    : "Sorry, I didn't understand. Please ask about crops, Bidri, subsidies, or soil.";
+                    ? "ಕ್ಷಮಿಸಿ, ನಾನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಬೆಳೆ, ಜಾನುವಾರು, ಲಂಬಾಣಿ ಎಂಬ್ರಾಯ್ಡರಿ, ಇಳಕಲ್ ಸೀರೆ, ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ, ಬಿದ್ರಿ ಕೆಲಸ, ಸಬ್ಸಿಡಿ, ಅಥವಾ ಮಣ್ಣಿನ ಬಗ್ಗೆ ಕೇಳಿ. ಸಹಾಯಕ್ಕಾಗಿ 'help' ಎಂದು ಟೈಪ್ ಮಾಡಿ."
+                    : "Sorry, I didn't understand. Please ask about crops, livestock, Lambani embroidery, Ilkal saree, Byadgi chilli, Bidri work, subsidies, or soil. Type 'help' for assistance.";
             }
             
             setTimeout(() => {
@@ -1659,7 +1806,6 @@
                 aryaRecognition.continuous = false;
                 aryaRecognition.interimResults = false;
                 
-                // Set language based on current language
                 if (currentLanguage === 'kannada') {
                     aryaRecognition.lang = 'kn-IN';
                 } else {
