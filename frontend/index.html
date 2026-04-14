@@ -1497,13 +1497,26 @@
         });
 
         function addAryaMessage(text, isUser = false) {
+            const messagesDiv = document.getElementById('aryaMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'arya-message'}`;
-            messageDiv.innerHTML = `
-                <div class="message-avatar">${isUser ? '👨‍🌾' : '🤖'}</div>
-                <div class="message-bubble">${text}</div>
-            `;
-            aryaMessages.appendChild(messageDiv);
+            
+            if (isUser) {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">👨‍🌾</div>
+                    <div class="message-bubble">${text}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble">
+                        ${text}
+                        <span class="speaker-icon" style="font-size: 10px; margin-left: 8px;">🔊</span>
+                    </div>
+                `;
+            }
+            
+            messagesDiv.appendChild(messageDiv);
             messageDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -1522,6 +1535,54 @@
         function hideTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
             if (indicator) indicator.remove();
+        }
+
+        // Speak with female voice in Kannada or English
+        function speakWithFemaleVoice(text, language) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Set language
+                if (language === 'kannada') {
+                    utterance.lang = 'kn-IN';
+                } else {
+                    utterance.lang = 'en-IN';
+                }
+                
+                utterance.rate = 0.9;
+                utterance.pitch = 1.2;  // Higher pitch = more feminine
+                utterance.volume = 1;
+                
+                // Try to select a female voice
+                const setFemaleVoice = () => {
+                    const voices = window.speechSynthesis.getVoices();
+                    
+                    if (language === 'kannada') {
+                        // Look for Kannada female voice
+                        const kannadaFemale = voices.find(voice => 
+                            voice.lang.includes('kn') && (voice.name.includes('Female') || voice.name.includes('Girl') || voice.name.includes('Samantha'))
+                        );
+                        if (kannadaFemale) utterance.voice = kannadaFemale;
+                    } else {
+                        // Look for Indian English female voice
+                        const englishFemale = voices.find(voice => 
+                            (voice.lang.includes('en-IN') || voice.lang.includes('en-GB')) && 
+                            (voice.name.includes('Female') || voice.name.includes('Girl') || voice.name.includes('Samantha') || voice.name.includes('Google UK Female'))
+                        );
+                        if (englishFemale) utterance.voice = englishFemale;
+                    }
+                };
+                
+                if (window.speechSynthesis.getVoices().length > 0) {
+                    setFemaleVoice();
+                } else {
+                    window.speechSynthesis.onvoiceschanged = setFemaleVoice;
+                }
+                
+                window.speechSynthesis.speak(utterance);
+            }
         }
 
         async function processUserMessage(message) {
@@ -1570,12 +1631,7 @@
             setTimeout(() => {
                 hideTypingIndicator();
                 addAryaMessage(response, false);
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(response);
-                    utterance.lang = currentLanguage === 'kannada' ? 'kn-IN' : 'en-IN';
-                    utterance.rate = 0.9;
-                    window.speechSynthesis.speak(utterance);
-                }
+                speakWithFemaleVoice(response, currentLanguage);
             }, 1000);
         }
 
@@ -1602,12 +1658,20 @@
                 aryaRecognition = new webkitSpeechRecognition();
                 aryaRecognition.continuous = false;
                 aryaRecognition.interimResults = false;
-                aryaRecognition.lang = currentLanguage === 'kannada' ? 'kn-IN' : 'en-IN';
+                
+                // Set language based on current language
+                if (currentLanguage === 'kannada') {
+                    aryaRecognition.lang = 'kn-IN';
+                } else {
+                    aryaRecognition.lang = 'en-IN';
+                }
                 
                 aryaRecognition.onstart = () => {
                     isAryaListening = true;
                     aryaMicBtn.classList.add('recording');
                     aryaMicBtn.innerHTML = '🎤';
+                    const statusMsg = currentLanguage === 'kannada' ? '🎤 ಕೇಳುತ್ತಿದ್ದೇನೆ... ಮಾತನಾಡಿ' : '🎤 Listening... Please speak';
+                    addAryaMessage(statusMsg, false);
                 };
                 
                 aryaRecognition.onresult = (event) => {
@@ -1619,7 +1683,10 @@
                     aryaMicBtn.classList.remove('recording');
                     aryaMicBtn.innerHTML = '🎤';
                     isAryaListening = false;
-                    addAryaMessage(currentLanguage === 'kannada' ? "ಕ್ಷಮಿಸಿ, ಕೇಳಿಸಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ." : "Sorry, I didn't hear you. Please try again.", false);
+                    const errorMsg = currentLanguage === 'kannada' 
+                        ? "ಕ್ಷಮಿಸಿ, ನನಗೆ ಕೇಳಿಸಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+                        : "Sorry, I didn't hear you. Please try again.";
+                    addAryaMessage(errorMsg, false);
                 };
                 
                 aryaRecognition.onend = () => {
@@ -1630,7 +1697,10 @@
                 
                 aryaRecognition.start();
             } else {
-                addAryaMessage(currentLanguage === 'kannada' ? "ಧ್ವನಿ ಇನ್ಪುಟ್ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ. ಕ್ರೋಮ್ ಬ್ರೌಸರ್ ಬಳಸಿ." : "Voice input not supported. Please use Chrome browser.", false);
+                const errorMsg = currentLanguage === 'kannada' 
+                    ? "ಧ್ವನಿ ಇನ್ಪುಟ್ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ. ಕ್ರೋಮ್ ಬ್ರೌಸರ್ ಬಳಸಿ."
+                    : "Voice input not supported. Please use Chrome browser.";
+                addAryaMessage(errorMsg, false);
             }
         }
 
