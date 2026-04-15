@@ -1,4 +1,4 @@
-# 🌾 Sahayak AI - Climate-Resilient Livelihood Planner
+# 🌾 Dhara Sampada - Climate-Resilient Livelihood Planner
 
 A full-stack web application that helps farmers in drought-prone North Karnataka diversify their income sources by providing personalized crop, livestock, and family skill recommendations based on land, water, budget, and location.
 
@@ -87,11 +87,9 @@ Farmers submit the following information through the web interface:
 
 sahayak-ai/
 
-├── backend/
+├── server.js # Express server with API routes
 
-│ ├── server.js # Express server with API routes
-
-│ └── package.json # Dependencies
+├── package.json # Dependencies
 
 ├── frontend/
 
@@ -125,9 +123,7 @@ b.Upload a photo of your soil
 
 c.Enter land size and budget
 
-d.Click "Analyze Soil"
-
-e.AI predicts soil type and recommends suitable crops
+d.Click "Analyze Soil" and predict soil type and recommends suitable crops
 
 ----
 
